@@ -2,10 +2,7 @@ export const fetchSchool = async (schoolName: string) => {
   try {
     const url = encodeURI(`/api/school?schoolName=${schoolName}`);
     const response = await fetch(url, {});
-    console.log(response);
     const rawData = await response.json();
-
-    console.log(rawData);
 
     if (rawData === null) return;
     const data = rawData.data;
