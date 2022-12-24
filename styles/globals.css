@@ -6,13 +6,16 @@ a {
 a:hover {
   text-decoration: underline;
 }
-
 a:visited {
   color: rgb(0, 80, 160);
 }
 
 label {
   display: block;
+}
+
+:root {
+  --rand: 0;
 }
 
 input,
@@ -38,15 +41,12 @@ button {
   background-color: #f4f4f4;
   outline: none;
 }
-
 button:disabled {
   color: #999;
 }
-
 button:not(:disabled):active {
   background-color: #ddd;
 }
-
 button:focus {
   border-color: #666;
 }
@@ -58,7 +58,18 @@ button:focus {
   font-weight: normal;
   font-style: normal;
 }
+
 * {
   font-family: "ONE-Mobile-POP";
   font-size: 20px;
+  user-select: none;
+}
+
+@keyframes tr {
+  from {
+    transform: scale(1.2) rotate(calc(calc(var(--rand)) * 5deg - 10deg));
+  }
+  to {
+    transform: none;
+  }
 }
