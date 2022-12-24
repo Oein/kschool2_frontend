@@ -1,8 +1,6 @@
-import clientEnv from "./clientEnv.json";
-
 export default async function fetchLeaderboard() {
   try {
-    const url = `${clientEnv}/leaderboard`;
+    const url = `Not made/leaderboard`;
     const response = await fetch(url);
     const data = await response.json();
 

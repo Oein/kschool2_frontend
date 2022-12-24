@@ -1,10 +1,6 @@
-import clientEnv from "./clientEnv.json";
-
 export const fetchSchool = async (schoolName: string) => {
   try {
-    const url = encodeURI(
-      `${clientEnv.BACKEND_URL}/school?schoolName=${schoolName}`
-    );
+    const url = encodeURI(`/api/school?schoolName=${schoolName}`);
     const response = await fetch(url, {});
     console.log(response);
     const rawData = await response.json();
