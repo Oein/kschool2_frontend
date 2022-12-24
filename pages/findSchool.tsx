@@ -17,6 +17,13 @@ export default function FindSchool() {
   let [schoolName, setSchoolName] = useState("");
 
   const getSchool = async () => {
+    if (
+      schoolName.toLocaleLowerCase().replaceAll(" ", "") ==
+      "nevergonnagiveyouup"
+    ) {
+      router.push("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+      return;
+    }
     if (!loading) {
       setLoading(true);
       setSchools((await fetchSchool(schoolName)) || []);
