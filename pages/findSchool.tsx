@@ -60,6 +60,7 @@ export default function FindSchool() {
                   onClick={() => {
                     localStorage.setItem("schoolName", school.schoolName);
                     localStorage.setItem("schoolCode", school.schoolCode);
+                    localStorage.setItem("myPop", "0");
                     router.push("/pop");
                   }}
                 >
