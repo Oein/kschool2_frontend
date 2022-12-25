@@ -12,6 +12,7 @@ import style from "./../styles/pop.module.css";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import axios from "axios";
 import Link from "next/link";
+import SnowFlakes from "../components/snowFlake";
 
 const PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
 const POP_SERVER =
@@ -181,6 +182,7 @@ export default function Pop() {
   if (getCaptchaAllowed())
     return (
       <NoSSR>
+        <SnowFlakes />
         {leaderboardOpened ? (
           <Leaderboard
             onClose={() => {
@@ -276,6 +278,7 @@ export default function Pop() {
             {getCaptchaAllowed() ? "a" : "b"}
           </div>
         </div>
+        <style>{`* {color: white;}`}</style>
       </NoSSR>
     );
 

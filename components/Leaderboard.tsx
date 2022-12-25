@@ -35,6 +35,7 @@ export default function Leaderboard({
               fontSize: "18px",
               justifyContent: "left",
               display: "inline",
+              color: "var(--color)",
             }}
           >
             🏆 랭킹 ({totalSchoolCount} 학교 참여)
@@ -48,19 +49,38 @@ export default function Leaderboard({
                 leaderboard.map((r, i) => {
                   return (
                     <li className="school" key={i}>
-                      <div className="schoolRank fontSize">
+                      <div
+                        className="schoolRank fontSize"
+                        style={{ color: "var(--color)" }}
+                      >
                         {showRank(i + 1)}
                       </div>
-                      <div className="schoolName fontSize">{r.schoolName}</div>
-                      <span className="schoolTier tierIcon {tier(r.pop, r.schoolRank)}"></span>
-                      <div className="schoolScore fontSize">
+                      <div
+                        className="schoolName fontSize"
+                        style={{ color: "var(--color)" }}
+                      >
+                        {r.schoolName}
+                      </div>
+                      <span
+                        className="schoolTier tierIcon {tier(r.pop, r.schoolRank)}"
+                        style={{ color: "var(--color)" }}
+                      ></span>
+                      <div
+                        className="schoolScore fontSize"
+                        style={{ color: "var(--color)" }}
+                      >
                         {comma(parseInt(r.pops))}
                       </div>
                     </li>
                   );
                 })
               ) : (
-                <li className="loading fontSize">로딩중... ⏳</li>
+                <li
+                  className="loading fontSize"
+                  style={{ color: "var(--color)" }}
+                >
+                  로딩중... ⏳
+                </li>
               )}
             </ol>
           </div>

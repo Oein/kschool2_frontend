@@ -16,6 +16,7 @@ label {
 
 :root {
   --rand: 0;
+  --color: black;
 }
 
 input,
@@ -30,6 +31,11 @@ textarea {
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 2px;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
 }
 
 input:disabled {
