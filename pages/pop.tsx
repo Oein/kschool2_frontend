@@ -17,6 +17,7 @@ const POP_SERVER =
   "https://port-0-kschool2-backend-20z52flc2w05e1.gksl2.cloudtype.app";
 const LEADERBOARD_SERVER =
   "https://port-0-kschool2-leaderboard-20z52flc2w05e1.gksl2.cloudtype.app";
+const MAX_POP_LIMIT = 200;
 
 function getPopImage(i: number) {
   if (i == 0) return style.popImage0;
@@ -25,8 +26,6 @@ function getPopImage(i: number) {
 
 export default function Pop() {
   const router = useRouter();
-
-  let token = "";
   let interv: any;
 
   let [schoolCount, setSchoolCount] = useState("-");
@@ -37,6 +36,7 @@ export default function Pop() {
   let [imageIDX, setImageIDX] = useState(0);
   let [leaderboardOpened, setLeaderboardOpened] = useState(false);
   let [leaderboard, setLeaderboard] = useState<Rank[]>([]);
+  let [totalSchoolCount, setTotalSchoolCount] = useState(0);
   let [captchaAllowed, setCaptchaAllowed] = useState(false);
 
   const getPersonalCnt = () => {
@@ -48,6 +48,9 @@ export default function Pop() {
     axios.get(`${LEADERBOARD_SERVER}/`).then((v) => {
       setLeaderboard(v.data);
     });
+    axios.get(`${LEADERBOARD_SERVER}/cnt`).then((v) => {
+      setTotalSchoolCount(parseInt(v.data));
+    });
   };
   const onCaptchaVerify = (v: any) => {
     setTimeout(() => {
@@ -55,7 +58,7 @@ export default function Pop() {
       axios.get(`${POP_SERVER}/register?token=${v}`).then((v) => {
         if (v.data.error) setCaptchaAllowed(false);
         else {
-          token = v.data.token;
+          window.token = v.data.token;
           setTimeout(() => {
             // regenerate hCaptcha
             setCaptchaAllowed(false);
@@ -64,11 +67,32 @@ export default function Pop() {
       });
     }, 500);
   };
-
+  const sendPop = () => {
+    if (captchaAllowed && window.popCount > 0)
+      axios
+        .get(
+          `${POP_SERVER}/?schoolCode=${localStorage.getItem(
+            "schoolCode"
+          )}&pop=${Math.min(window.popCount, MAX_POP_LIMIT)}&token=${
+            window.token
+          }`
+        )
+        .then((v) => {
+          window.popCount = 0;
+          window.token = v.data.token;
+          setGlobalCount(v.data.total);
+          setSchoolCount(v.data.schoolPop);
+          setSchoolRank(v.data.rank);
+        });
+    else window.popCount = 0;
+  };
   useEffect(() => {
     if (typeof window !== "undefined" && window) {
-      let g = localStorage.getItem("lastCaptcha");
+      window.popCount = 0;
     }
+
+    // 20초 마다 sendPop
+    setInterval(sendPop, 20 * 1000);
   }, []);
   useEffect(() => {
     const usingMacro = () => {
@@ -94,6 +118,7 @@ export default function Pop() {
       setImageIDX((imageIDX + 1) % 2);
       setPersonalCnt(getPersonalCnt().toString());
       animate();
+      window.popCount++;
     };
 
     setSchoolName(localStorage.getItem("schoolName") || "-");
@@ -135,6 +160,7 @@ export default function Pop() {
               setLeaderboardOpened(false);
               clearInterval(interv);
             }}
+            totalSchoolCount={totalSchoolCount}
             leaderboard={leaderboard}
           />
         ) : null}
