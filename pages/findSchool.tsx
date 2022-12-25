@@ -24,6 +24,12 @@ export default function FindSchool() {
       router.push("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
       return;
     }
+
+    if (schoolName.toLocaleLowerCase().replaceAll(" ", "") == "삐딱하게") {
+      router.push("https://www.youtube.com/watch?v=RKhsHGfrFmY");
+      return;
+    }
+
     if (!loading) {
       setLoading(true);
       setSchools((await fetchSchool(schoolName)) || []);
