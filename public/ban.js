@@ -5,4 +5,9 @@ document.addEventListener("keydown", (e) => {
     alert("개발자 도구는 접근할 수 없습니다!");
     e.returnValue = false;
   }
+  if (e.keyCode == 85 && e.ctrlKey) {
+    e.preventDefault();
+    alert("소스를 볼 수 없습니다!");
+    e.returnValue = false;
+  }
 });
