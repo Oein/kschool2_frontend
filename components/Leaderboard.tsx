@@ -25,7 +25,7 @@ export default function Leaderboard({
 }) {
   return (
     <>
-      <div className="leaderboard-container" onClick={onClose}>
+      <div className="leaderboard-container">
         <div className="leaderboard">
           <span
             className="title fontSize"
@@ -47,7 +47,7 @@ export default function Leaderboard({
                   return (
                     <li className="school" key={i}>
                       <div className="schoolRank fontSize">
-                        {showRank(parseInt(r.schoolRank))}
+                        {showRank(i + 1)}
                       </div>
                       <div className="schoolName fontSize">{r.schoolName}</div>
                       <span className="schoolTier tierIcon {tier(r.pop, r.schoolRank)}"></span>
