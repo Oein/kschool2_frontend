@@ -52,7 +52,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   if (typeof location !== "undefined")
     console.log(
-      `콘솔을 들어왔다는 것은 매크로를 쓰고 싶어서 왔다는 것이네요! 콘솔이  뚫렸으니 👉( ${location.protocol}//${location.host}/reportConsole )👈를 눌러 버그를 제보합시다! `
+      `콘솔을 들어왔다는 것은 매크로를 쓰고 싶어서 왔다는 것이네요! 콘솔이  뚫렸으니 👉( ${location.protocol}//${location.host}/reportBugs )👈를 눌러 버그를 제보합시다! `
     );
 
   return (
