@@ -1,4 +1,6 @@
-document.dispatchEvent = () => {};
+document.dispatchEvent = () => {
+  location.href = "/reportBugs";
+};
 document.addEventListener("keydown", (e) => {
   if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) {
     e.preventDefault();
