@@ -50,11 +50,10 @@ export default function App({ Component, pageProps }: AppProps) {
 `
   );
 
-  console.log(
-    "%c%s",
-    ["font-size: xx-large;", "color: red;"].join(""),
-    "안녕하세요. 매크로 쓰지 말라니까 왜 여기왔니 이 이쁜 친구야. 좋은말 할때 끄즈라"
-  );
+  if (typeof location !== "undefined")
+    console.log(
+      `콘솔을 들어왔다는 것은 매크로를 쓰고 싶어서 왔다는 것이네요! 콘솔이  뚫렸으니 👉( ${location.protocol}//${location.host}/reportConsole )👈를 눌러 버그를 제보합시다! `
+    );
 
   return (
     <>
