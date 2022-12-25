@@ -26,7 +26,6 @@ function getPopImage(i: number) {
 
 export default function Pop() {
   const router = useRouter();
-  let interv: any;
 
   let [schoolCount, setSchoolCount] = useState("-");
   let [schoolRank, setSchoolRank] = useState("-");
@@ -162,7 +161,6 @@ export default function Pop() {
           <Leaderboard
             onClose={() => {
               setLeaderboardOpened(false);
-              clearInterval(interv);
             }}
             totalSchoolCount={totalSchoolCount}
             leaderboard={leaderboard}
@@ -223,7 +221,6 @@ export default function Pop() {
             className={style.leaderboardContx}
             onClick={() => {
               setLeaderboardOpened(true);
-              interv = setInterval(refreshLeader, 20 * 1000);
               refreshLeader();
             }}
           >
