@@ -49,31 +49,35 @@ export default function Pop() {
       setLeaderboard(v.data);
     });
     axios.get(`${LEADERBOARD_SERVER}/cnt`).then((v) => {
-      setTotalSchoolCount(parseInt(v.data));
+      setTotalSchoolCount(parseInt(v.data.cnt));
     });
   };
   const onCaptchaVerify = (v: any) => {
     setTimeout(() => {
       setCaptchaAllowed(true);
+      window.captchaAllowed = true;
       axios.get(`${POP_SERVER}/register?token=${v}`).then((v) => {
-        if (v.data.error) setCaptchaAllowed(false);
-        else {
+        if (v.data.error) {
+          setCaptchaAllowed(false);
+          window.captchaAllowed = false;
+        } else {
           window.token = v.data.token;
           setTimeout(() => {
             // regenerate hCaptcha
             setCaptchaAllowed(false);
+            window.captchaAllowed = false;
           }, 1000 * 60 * 29.5);
         }
       });
     }, 500);
   };
   const sendPop = () => {
-    if (captchaAllowed && window.popCount > 0)
+    if (window.captchaAllowed && window.popCount > 0)
       axios
-        .get(
-          `${POP_SERVER}/?schoolCode=${localStorage.getItem(
+        .post(
+          `${POP_SERVER}/pop?schoolCode=${localStorage.getItem(
             "schoolCode"
-          )}&pop=${Math.min(window.popCount, MAX_POP_LIMIT)}&token=${
+          )}&count=${Math.min(window.popCount, MAX_POP_LIMIT)}&token=${
             window.token
           }`
         )
