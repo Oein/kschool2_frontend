@@ -194,6 +194,7 @@ export default function Pop() {
             onClick={() => {
               setLeaderboardOpened(true);
               interv = setInterval(refreshLeader, 20 * 1000);
+              refreshLeader();
             }}
           >
             <div className={style.leaderboardInfo}>
