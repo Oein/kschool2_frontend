@@ -12,22 +12,8 @@ import { useEffect, useState } from "react";
 import Alert from "../components/Alert";
 import Jo from "../components/eventAlert/jocoding";
 
-import axios from "axios";
-import { useRouter } from "next/router";
-
 export default function App({ Component, pageProps }: AppProps) {
   let [alertOpen, setAlertOpen] = useState(true);
-
-  let router = useRouter();
-
-  useEffect(() => {
-    axios.get("http://ip-api.com/json").then((v) => {
-      if (v.data.countryCode != "KR") {
-        router.push("/notKR");
-        return;
-      }
-    });
-  }, [router]);
 
   return (
     <>
