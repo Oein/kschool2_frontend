@@ -15,7 +15,12 @@ import Jo from "../components/eventAlert/jocoding";
 export default function App({ Component, pageProps }: AppProps) {
   let [alertOpen, setAlertOpen] = useState(true);
 
-  console.log(`
+  console.log(
+    "%c%s",
+    ["font-size: 20px;", 'font-family: font-family: "ONE-Mobile-POP";'].join(
+      ""
+    ),
+    `
   ********************************************************************
    
    K   KK             SSSSS     CCCC   H   H   OOOOO    OOOOO   L
@@ -39,7 +44,8 @@ export default function App({ Component, pageProps }: AppProps) {
       - sangho129    (@sangho129)          - 
 
   ********************************************************************
-            `);
+            `
+  );
 
   return (
     <>
