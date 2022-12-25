@@ -95,8 +95,6 @@ export default function Pop() {
     return captchaAllowed;
   };
   const sendPop = () => {
-    console.log("[CAPTCHA]", getCaptchaAllowed());
-    console.log("[COUNT]", getCount());
     setCaptchaAllowed((prev) => {
       setPopCount((prevC) => {
         if (prev && prevC > 0)
