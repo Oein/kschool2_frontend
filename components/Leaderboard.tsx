@@ -19,9 +19,11 @@ export interface Rank {
 export default function Leaderboard({
   onClose,
   leaderboard,
+  totalSchoolCount,
 }: {
   onClose: () => void;
   leaderboard: Rank[];
+  totalSchoolCount: number;
 }) {
   return (
     <>
@@ -35,7 +37,7 @@ export default function Leaderboard({
               display: "inline",
             }}
           >
-            🏆 랭킹 ({length == -1 ? "⏳" : length} 학교 참여)
+            🏆 랭킹 ({totalSchoolCount} 학교 참여)
           </span>
           <span className="close fontSize" onClick={onClose}>
             ❌
