@@ -13,7 +13,7 @@ export interface Rank {
   schoolCode: string;
   schoolRank: string;
   schoolName: string;
-  pop: string;
+  pops: string;
 }
 
 export default function Leaderboard({
@@ -52,7 +52,7 @@ export default function Leaderboard({
                       <div className="schoolName fontSize">{r.schoolName}</div>
                       <span className="schoolTier tierIcon {tier(r.pop, r.schoolRank)}"></span>
                       <div className="schoolScore fontSize">
-                        {comma(parseInt(r.pop))}
+                        {comma(parseInt(r.pops))}
                       </div>
                     </li>
                   );

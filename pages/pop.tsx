@@ -44,6 +44,11 @@ export default function Pop() {
       localStorage.getItem(PERSONALCOUNT_LOCALSTORAGE_KEY) || "0"
     );
   };
+  const refreshLeader = () => {
+    axios.get(`${LEADERBOARD_SERVER}/`).then((v) => {
+      setLeaderboard(v.data);
+    });
+  };
   const onCaptchaVerify = (v: any) => {
     setTimeout(() => {
       setCaptchaAllowed(true);
@@ -188,11 +193,7 @@ export default function Pop() {
             className={style.leaderboardContx}
             onClick={() => {
               setLeaderboardOpened(true);
-              interv = setInterval(() => {
-                axios.get(`${LEADERBOARD_SERVER}/`).then((v) => {
-                  console.log(v);
-                });
-              }, 20 * 1000);
+              interv = setInterval(refreshLeader, 20 * 1000);
             }}
           >
             <div className={style.leaderboardInfo}>
