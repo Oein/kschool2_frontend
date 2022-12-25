@@ -22,7 +22,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     axios.get("http://ip-api.com/json").then((v) => {
-      console.log(v.data);
       if (v.data.countryCode != "KR") {
         router.push("/notKR");
         return;
