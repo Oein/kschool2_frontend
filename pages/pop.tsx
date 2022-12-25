@@ -11,6 +11,7 @@ import classNames from "classnames";
 import style from "./../styles/pop.module.css";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import axios from "axios";
+import Link from "next/link";
 
 const PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
 const POP_SERVER =
@@ -37,6 +38,8 @@ export default function Pop() {
   let [leaderboard, setLeaderboard] = useState<Rank[]>([]);
   let [totalSchoolCount, setTotalSchoolCount] = useState(0);
   let [captchaAllowed, setCaptchaAllowed] = useState(false);
+  let [popCount, setPopCount] = useState(0);
+  let [easterClick, setEasterClick] = useState(0);
 
   const getPersonalCnt = () => {
     return parseInt(
@@ -54,48 +57,41 @@ export default function Pop() {
   const onCaptchaVerify = (v: any) => {
     setTimeout(() => {
       setCaptchaAllowed(true);
-      window.captchaAllowed = true;
       axios.get(`${POP_SERVER}/register?token=${v}`).then((v) => {
         if (v.data.error) {
           setCaptchaAllowed(false);
-          window.captchaAllowed = false;
         } else {
           window.token = v.data.token;
           setTimeout(() => {
             // regenerate hCaptcha
             setCaptchaAllowed(false);
-            window.captchaAllowed = false;
           }, 1000 * 60 * 29.5);
         }
       });
     }, 500);
   };
   const sendPop = () => {
-    if (window.captchaAllowed && window.popCount > 0)
+    if (captchaAllowed && popCount > 0)
       axios
         .post(
           `${POP_SERVER}/pop?schoolCode=${localStorage.getItem(
             "schoolCode"
-          )}&count=${Math.min(window.popCount, MAX_POP_LIMIT)}&token=${
-            window.token
-          }`
+          )}&count=${Math.min(popCount, MAX_POP_LIMIT)}&token=${window.token}`
         )
         .then((v) => {
-          window.popCount = 0;
+          setPopCount(0);
           window.token = v.data.token;
           setGlobalCount(v.data.total);
           setSchoolCount(v.data.schoolPop);
           setSchoolRank(v.data.rank);
         });
-    else window.popCount = 0;
+    else setPopCount(0);
   };
   useEffect(() => {
-    if (typeof window !== "undefined" && window) {
-      window.popCount = 0;
-    }
-
-    // 20초 마다 sendPop
     setInterval(sendPop, 20 * 1000);
+  }, []);
+  useEffect(() => {
+    setInterval(() => {}, 10 * 1000);
   }, []);
   useEffect(() => {
     const usingMacro = () => {
@@ -121,7 +117,7 @@ export default function Pop() {
       setImageIDX((imageIDX + 1) % 2);
       setPersonalCnt(getPersonalCnt().toString());
       animate();
-      window.popCount++;
+      setPopCount(popCount + 1);
     };
 
     setSchoolName(localStorage.getItem("schoolName") || "-");
@@ -181,12 +177,20 @@ export default function Pop() {
           }}
         />
         <div className={style.pop}>
-          <div className={classNames([style.mainBtn, style.btnSize])}>🌐</div>
+          <div className={classNames([style.mainBtn, style.btnSize])}>
+            <Link href="https://twitter.com/_awesome_dream">🌐</Link>
+          </div>
           <div className={classNames([style.searchSchoolBtn, style.btnSize])}>
-            🔍
+            <Link href="/findSchool">🔍</Link>
           </div>
           <div className={style.title}>
-            <h1>K-SCHOOL</h1>
+            <h1
+              onClick={() => {
+                setEasterClick(easterClick + 1);
+              }}
+            >
+              {easterClick > 1000 ? "LOOHCS-K" : "K-SCHOOL"}
+            </h1>
             <img className={style.jo} src="/jo.png" draggable="false" alt="" />
           </div>
 
@@ -235,6 +239,14 @@ export default function Pop() {
               </div>
             </div>
           </div>
+          <div
+            style={{
+              display: "none",
+            }}
+          >
+            {popCount}
+            {captchaAllowed ? "a" : "b"}
+          </div>
         </div>
       </NoSSR>
     );
@@ -258,6 +270,15 @@ export default function Pop() {
             onVerify={onCaptchaVerify}
           />
         </div>
+      </div>
+
+      <div
+        style={{
+          display: "none",
+        }}
+      >
+        {popCount}
+        {captchaAllowed ? "a" : "b"}
       </div>
     </>
   );
