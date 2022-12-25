@@ -16,7 +16,8 @@ label {
 
 :root {
   --rand: 0;
-  --color: black;
+  --color: white;
+  --background: #303033;
 }
 
 input,
@@ -36,6 +37,8 @@ textarea {
 body {
   margin: 0px;
   padding: 0px;
+  color: var(--color);
+  background: var(--background);
 }
 
 input:disabled {

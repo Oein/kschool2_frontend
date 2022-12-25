@@ -13,6 +13,7 @@ export default function Alert({
               justifyContent: "left",
               fontSize: "20px",
               display: "inline",
+              color: "black",
             }}
           >
             이벤트 알림
@@ -24,6 +25,7 @@ export default function Alert({
             className="something fontSize"
             style={{
               fontSize: "20px",
+              color: "black",
             }}
           >
             {children}
