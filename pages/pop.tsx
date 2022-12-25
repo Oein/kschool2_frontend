@@ -10,8 +10,13 @@ import classNames from "classnames";
 
 import style from "./../styles/pop.module.css";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
+import axios from "axios";
 
 const PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
+const POP_SERVER =
+  "https://port-0-kschool2-backend-20z52flc2w05e1.gksl2.cloudtype.app";
+const LEADERBOARD_SERVER =
+  "https://port-0-kschool2-leaderboard-20z52flc2w05e1.gksl2.cloudtype.app";
 
 function getPopImage(i: number) {
   if (i == 0) return style.popImage0;
@@ -20,6 +25,9 @@ function getPopImage(i: number) {
 
 export default function Pop() {
   const router = useRouter();
+
+  let token = "";
+  let interv: any;
 
   let [schoolCount, setSchoolCount] = useState("-");
   let [schoolRank, setSchoolRank] = useState("-");
@@ -39,6 +47,16 @@ export default function Pop() {
   const onCaptchaVerify = (v: any) => {
     setTimeout(() => {
       setCaptchaAllowed(true);
+      axios.get(`${POP_SERVER}/register?token=${v}`).then((v) => {
+        if (v.data.error) setCaptchaAllowed(false);
+        else {
+          token = v.data.token;
+          setTimeout(() => {
+            // regenerate hCaptcha
+            setCaptchaAllowed(false);
+          }, 1000 * 60 * 29.5);
+        }
+      });
     }, 500);
   };
 
@@ -110,6 +128,7 @@ export default function Pop() {
           <Leaderboard
             onClose={() => {
               setLeaderboardOpened(false);
+              clearInterval(interv);
             }}
             leaderboard={leaderboard}
           />
@@ -169,6 +188,11 @@ export default function Pop() {
             className={style.leaderboardContx}
             onClick={() => {
               setLeaderboardOpened(true);
+              interv = setInterval(() => {
+                axios.get(`${LEADERBOARD_SERVER}/`).then((v) => {
+                  console.log(v);
+                });
+              }, 20 * 1000);
             }}
           >
             <div className={style.leaderboardInfo}>
