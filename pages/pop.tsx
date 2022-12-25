@@ -25,6 +25,13 @@ function getPopImage(i: number) {
   else return style.popImage1;
 }
 
+const showRank = (rank: number) => {
+  if (rank == 1) return "🥇";
+  if (rank == 2) return "🥈";
+  if (rank == 3) return "🥉";
+  return rank;
+};
+
 export default function Pop() {
   const router = useRouter();
 
@@ -56,36 +63,48 @@ export default function Pop() {
   };
   const onCaptchaVerify = (v: any) => {
     setTimeout(() => {
-      setCaptchaAllowed(true);
+      setCaptchaAllowed((prev) => true);
       axios.get(`${POP_SERVER}/register?token=${v}`).then((v) => {
         if (v.data.error) {
-          setCaptchaAllowed(false);
+          setCaptchaAllowed((prev) => false);
         } else {
           window.token = v.data.token;
           setTimeout(() => {
             // regenerate hCaptcha
-            setCaptchaAllowed(false);
+            setCaptchaAllowed((prev) => false);
           }, 1000 * 60 * 29.5);
         }
       });
     }, 500);
   };
+  const getCount = () => {
+    return popCount;
+  };
+  const getCaptchaAllowed = () => {
+    return captchaAllowed;
+  };
   const sendPop = () => {
-    if (captchaAllowed && popCount > 0)
-      axios
-        .post(
-          `${POP_SERVER}/pop?schoolCode=${localStorage.getItem(
-            "schoolCode"
-          )}&count=${Math.min(popCount, MAX_POP_LIMIT)}&token=${window.token}`
-        )
-        .then((v) => {
-          setPopCount(0);
-          window.token = v.data.token;
-          setGlobalCount(v.data.total);
-          setSchoolCount(v.data.schoolPop);
-          setSchoolRank(v.data.rank);
-        });
-    else setPopCount(0);
+    console.log("[CAPTCHA]", getCaptchaAllowed());
+    console.log("[COUNT]", getCount());
+    setCaptchaAllowed((prev) => {
+      setPopCount((prevC) => {
+        if (prev && prevC > 0)
+          axios
+            .post(
+              `${POP_SERVER}/pop?schoolCode=${localStorage.getItem(
+                "schoolCode"
+              )}&count=${Math.min(prevC, MAX_POP_LIMIT)}&token=${window.token}`
+            )
+            .then((v) => {
+              window.token = v.data.token;
+              setGlobalCount(v.data.total);
+              setSchoolCount(v.data.schoolPop);
+              setSchoolRank(v.data.rank);
+            });
+        return 0;
+      });
+      return prev;
+    });
   };
   useEffect(() => {
     setInterval(sendPop, 20 * 1000);
@@ -117,7 +136,7 @@ export default function Pop() {
       setImageIDX((imageIDX + 1) % 2);
       setPersonalCnt(getPersonalCnt().toString());
       animate();
-      setPopCount(popCount + 1);
+      setPopCount((prev) => prev + 1);
     };
 
     setSchoolName(localStorage.getItem("schoolName") || "-");
@@ -135,7 +154,7 @@ export default function Pop() {
 
     setPersonalCnt(getPersonalCnt().toString());
 
-    if (captchaAllowed) {
+    if (getCaptchaAllowed()) {
       document.onkeydown = (e) => {
         if (!e.repeat && e.isTrusted) {
           pop();
@@ -150,7 +169,7 @@ export default function Pop() {
     }
   }, [captchaAllowed, imageIDX, personalCnt, router, setPersonalCnt]);
 
-  if (captchaAllowed)
+  if (getCaptchaAllowed())
     return (
       <NoSSR>
         {leaderboardOpened ? (
@@ -197,7 +216,7 @@ export default function Pop() {
           <div className={style.school}>
             <div className={style.schoolData}>
               <div className={classNames([style.fontSize, style.schoolRank])}>
-                {schoolRank}
+                {showRank(parseInt(schoolRank))}
               </div>
               <div className={classNames([style.fontSize, style.schoolName])}>
                 {schoolName}
@@ -244,8 +263,8 @@ export default function Pop() {
               display: "none",
             }}
           >
-            {popCount}
-            {captchaAllowed ? "a" : "b"}
+            {getCount()}
+            {getCaptchaAllowed() ? "a" : "b"}
           </div>
         </div>
       </NoSSR>
@@ -277,8 +296,8 @@ export default function Pop() {
           display: "none",
         }}
       >
-        {popCount}
-        {captchaAllowed ? "a" : "b"}
+        {getCount()}
+        {getCaptchaAllowed() ? "a" : "b"}
       </div>
     </>
   );
