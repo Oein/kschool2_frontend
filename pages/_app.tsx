@@ -50,6 +50,12 @@ export default function App({ Component, pageProps }: AppProps) {
 `
   );
 
+  console.log(
+    "%c%s",
+    ["font-size: xx-large;", "color: red;"].join(""),
+    "안녕하세요. 매크로 쓰지 말라니까 왜 여기왔니 이 이쁜 친구야. 좋은말 할때 끄즈라"
+  );
+
   return (
     <>
       {alertOpen ? (
