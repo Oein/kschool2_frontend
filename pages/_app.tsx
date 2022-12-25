@@ -17,34 +17,37 @@ export default function App({ Component, pageProps }: AppProps) {
 
   console.log(
     "%c%s",
-    ["font-size: 20px;", 'font-family: font-family: "ONE-Mobile-POP";'].join(
-      ""
-    ),
+    [
+      "font-size: 20px;",
+      'font-family: font-family: "ONE-Mobile-POP";',
+      "background: rgb(27,34,38);",
+      "color: rgb(190,190,190);",
+    ].join(""),
     `
-  ********************************************************************
-   
-   K   KK             SSSSS     CCCC   H   H   OOOOO    OOOOO   L
-   K KK              SS        CC  CC  H   H  OO   OO  OO   OO  L
-   KK       -----     SSSSS    C       HHHHH  O     O  O     O  L
-   K KK                   SS   CC  CC  H   H  OO   OO  OO   OO  L
-   K   KK             SSSSS     CCCC   H   H   OOOOO    OOOOO   LLLLL
-
-             CCCCC    L      IIIII   CCCCC   K   KK
-            CC   CC   L        I    CC   CC  K KK
-            C         L        I    C        KK
-            CC   CC   L        I    CC   CC  K KK
-             CCCCC    LLLLL  IIIII   CCCCC   K   KK            v2.0.0
-
-  ********************************************************************
-
-     Developers      (@Github)            Special Thanks to
+  ********************************************************************  
+                                                                        
+   K   KK             SSSSS     CCCC   H   H   OOOOO    OOOOO   L       
+   K KK              SS        CC  CC  H   H  OO   OO  OO   OO  L       
+   KK       -----     SSSSS    C       HHHHH  O     O  O     O  L       
+   K KK                   SS   CC  CC  H   H  OO   OO  OO   OO  L       
+   K   KK             SSSSS     CCCC   H   H   OOOOO    OOOOO   LLLLL   
+                                                                        
+             CCCCC    L      IIIII   CCCCC   K   KK                     
+            CC   CC   L        I    CC   CC  K KK                       
+            C         L        I    C        KK                         
+            CC   CC   L        I    CC   CC  K KK                       
+             CCCCC    LLLLL  IIIII   CCCCC   K   KK            v2.0.0   
+                                                                        
+  ********************************************************************  
+                                                                        
+     Developers      (@Github)            Special Thanks to             
       - AwesomeDream (@awesomeSwam)        - JoCoding (https://www.youtube.com/@jocoding)
-      - SungHyun     (@Oein)               - 
-      - sdnight5     (@sdnight5)           - 
-      - sangho129    (@sangho129)          - 
-
-  ********************************************************************
-            `
+      - SungHyun     (@Oein)               -                            
+      - sdnight5     (@sdnight5)           -                            
+      - sangho129    (@sangho129)          -                            
+                                                                        
+  ********************************************************************  
+`
   );
 
   return (
