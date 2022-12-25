@@ -11,3 +11,19 @@ document.addEventListener("keydown", (e) => {
     e.returnValue = false;
   }
 });
+
+let textCnt = document.getElementById("text.cnt");
+let lastScore = Number(localStorage.getItem("myPop"));
+setInterval(() => {
+  try {
+    let nowScore = Number(textCnt.innerText);
+    let diff = nowScore - lastScore;
+    lastScore = nowScore;
+
+    if (diff > 100) {
+      location.href = "/usingMacro";
+    }
+  } catch (e) {
+    textCnt = document.getElementById("text.cnt");
+  }
+}, 1000);
