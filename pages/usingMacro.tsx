@@ -10,7 +10,7 @@ export default function UsingMacro() {
     <>
       <div className="macro-container">
         <div className="macro">
-          <span className="title">⚠️ 매크로 사용 발각</span>
+          <span className="title">⚠️ 매크로 사용 감지</span>
           <div className="contents">
             최근 서버에 부담을 주는 가장 큰 원인인 매크로 사용을 자제해주셨으면
             합니다.
