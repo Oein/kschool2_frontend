@@ -69,6 +69,17 @@ export default function Pop() {
           setCaptchaAllowed((prev) => false);
         } else {
           window.token = v.data.token;
+          axios
+            .get(
+              `${POP_SERVER}/first?schoolCode=${localStorage.getItem(
+                "schoolCode"
+              )}`
+            )
+            .then((v) => {
+              setSchoolCount(v.data.schoolPop);
+              setSchoolRank(v.data.rank);
+              setGlobalCount(v.data.total);
+            });
           setTimeout(() => {
             // regenerate hCaptcha
             setCaptchaAllowed((prev) => false);
