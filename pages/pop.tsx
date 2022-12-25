@@ -37,7 +37,6 @@ export default function Pop() {
     );
   };
   const onCaptchaVerify = (v: any) => {
-    console.log(v);
     setTimeout(() => {
       setCaptchaAllowed(true);
     }, 500);
