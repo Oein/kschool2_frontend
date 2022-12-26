@@ -23,9 +23,9 @@ export default function UsingMacro() {
               marginTop: "5px",
             }}
           >
-            ⛔ 매크로 이용 시 밴입니다. 밴 해지 요청은{" "}
+            ⛔ 매크로 이용시 10일 밴입니다. 밴 해지 요청은{" "}
             <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">👉여기👈</a>
-            에서 해주세요
+            에서 해주세요. 또한 5회 매크로 이용시 영구밴 이니 조심하세요.
           </div>
         </div>
       </div>
