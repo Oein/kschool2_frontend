@@ -1,6 +1,8 @@
 export var fetchSchool = async (schoolName: string) => {
   try {
-    var url = encodeURI(`/api/school?schoolName=${schoolName}`);
+    var url = encodeURI(
+      `https://overless.vercel.app/api/kschool/v1/school?schoolName=${schoolName}`
+    );
     var response = await fetch(url, {});
     var rawData = await response.json();
 
