@@ -93,9 +93,11 @@ export default function Pop() {
               )}`
             )
             .then((v) => {
-              setSchoolCount(v.data.schoolPop);
-              setSchoolRank(v.data.rank);
-              setGlobalCount(v.data.total);
+              let x = v.data as string;
+              let y = x.split("/");
+              setSchoolCount(y[2]);
+              setSchoolRank(y[1]);
+              setGlobalCount(y[0]);
             });
           setTimeout(() => {
             // regenerate hCaptcha
