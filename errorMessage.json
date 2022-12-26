@@ -1,0 +1,8 @@
+{
+  "-1": "Banned for 10 days",
+  "-2": "Query is invalid",
+  "-4": "Server Error",
+  "-5": "Too many requests",
+  "-6": "Token is invalid",
+  "-7": "hCaptcha token is invalid"
+}
