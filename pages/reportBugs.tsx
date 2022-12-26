@@ -38,6 +38,14 @@ export default function UsingMacro() {
             ⛔ 콘솔 이용시 1일 밴입니다. 밴 해지 요청은{" "}
             <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">👉여기👈</a>
             에서 해주세요
+            <div
+              style={{
+                fontSize: "1px",
+                opacity: "0.01",
+              }}
+            >
+              여기는 계좌를 쓸 공간이 없으니 어썸링님은 돈 안줘요
+            </div>
           </div>
         </div>
       </div>
