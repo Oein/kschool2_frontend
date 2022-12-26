@@ -124,10 +124,12 @@ export default function Pop() {
               )}&count=${Math.min(prevC, MAX_POP_LIMIT)}&token=${window.token}`
             )
             .then((v) => {
-              window.token = v.data.token;
-              setGlobalCount(v.data.total);
-              setSchoolCount(v.data.schoolPop);
-              setSchoolRank(v.data.rank);
+              let x = v.data as string;
+              let y = x.split("/");
+              window.token = y[3];
+              setGlobalCount(y[0]);
+              setSchoolCount(y[2]);
+              setSchoolRank(y[1]);
             });
         return 0;
       });
