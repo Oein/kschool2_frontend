@@ -1,6 +1,9 @@
-document.dispatchEvent = () => {
-  location.href = "/reportBugs";
-};
+let all_elements = document.getElementsByTagName("*");
+for (let i = 0; i < all_elements.length; i++) {
+  all_elements[i].dispatchEvent = () => {
+    location.href = "/reportBugs";
+  };
+}
 document.addEventListener("keydown", (e) => {
   if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 73)) {
     e.preventDefault();
