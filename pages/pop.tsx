@@ -18,10 +18,8 @@ import getSession from "../functions/getSeason";
 import errorHandle from "../functions/axiosErrorHandle";
 
 var PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
-var POP_SERVER =
+var BACKEND =
   "https://port-0-kschool2-backend-20z52flc2w05e1.gksl2.cloudtype.app";
-var LEADERBOARD_SERVER =
-  "https://port-0-kschool2-leaderboard-20z52flc2w05e1.gksl2.cloudtype.app";
 var MAX_POP_LIMIT = 200;
 
 function getPopImage(i: number) {
@@ -63,7 +61,7 @@ export default function Pop() {
   };
   var refreshLeader = () => {
     axios
-      .get(`${LEADERBOARD_SERVER}/`)
+      .get(`${BACKEND}/lead`)
       .then((v) => {
         var strg = v.data as string;
         var strx = strg.split("*");
@@ -87,7 +85,7 @@ export default function Pop() {
     setTimeout(() => {
       setCaptchaAllowed((prev) => true);
       axios
-        .get(`${POP_SERVER}/register?token=${v}`)
+        .get(`${BACKEND}/register?token=${v}`)
         .then((v) => {
           if (v.data.error) {
             setCaptchaAllowed((prev) => false);
@@ -95,7 +93,7 @@ export default function Pop() {
             window.token = v.data as string;
             axios
               .get(
-                `${POP_SERVER}/first?schoolCode=${localStorage.getItem(
+                `${BACKEND}/first?schoolCode=${localStorage.getItem(
                   "schoolCode"
                 )}`
               )
@@ -126,7 +124,7 @@ export default function Pop() {
         if (prev && prevC > 0)
           axios
             .post(
-              `${POP_SERVER}/pop?schoolCode=${localStorage.getItem(
+              `${BACKEND}/pop?schoolCode=${localStorage.getItem(
                 "schoolCode"
               )}&count=${Math.min(prevC, MAX_POP_LIMIT)}&token=${window.token}`
             )
