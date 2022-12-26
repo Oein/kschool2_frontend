@@ -10,7 +10,6 @@ const comma = (x: number) => {
 };
 
 export interface Rank {
-  schoolCode: string;
   schoolRank: string;
   schoolName: string;
   pops: string;
