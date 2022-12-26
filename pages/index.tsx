@@ -7,10 +7,12 @@ export default function Main() {
       typeof window.navigator !== "undefined" &&
       window.navigator &&
       window.navigator.webdriver
-    )
+    ) {
+      let x = parseInt(localStorage.getItem("macroed") || "0") + 1;
+      localStorage.setItem("macroed", x.toString());
       router.push("/usingMacro");
+    }
 
-    if (window.localStorage.getItem("macro")) router.push("/usingMacro");
     if (
       window.localStorage.getItem("schoolName") == null ||
       window.localStorage.getItem("schoolCode") == null

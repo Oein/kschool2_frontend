@@ -132,6 +132,8 @@ export default function Pop() {
     const usingMacro = () => {
       window.localStorage.setItem("macro", "1");
       router.push("/usingMacro");
+      let x = parseInt(localStorage.getItem("macroed") || "0") + 1;
+      localStorage.setItem("macroed", x.toString());
     };
     const animate = () => {
       let el = document.getElementById("text.cnt") as HTMLDivElement;
