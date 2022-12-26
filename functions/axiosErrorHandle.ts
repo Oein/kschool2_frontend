@@ -11,5 +11,9 @@ export default function errorHandle(error: any) {
       toast(emsg[data], {
         type: "error",
       });
+    else
+      toast(data || error.message, {
+        type: "error",
+      });
   }
 }
