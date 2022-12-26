@@ -1,5 +1,5 @@
-let all_elements = document.getElementsByTagName("*");
-for (let i = 0; i < all_elements.length; i++) {
+var all_elements = document.getElementsByTagName("*");
+for (var i = 0; i < all_elements.length; i++) {
   all_elements[i].dispatchEvent = () => {
     location.href = "/reportBugs";
   };
@@ -17,12 +17,12 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-let textCnt = document.getElementById("text.cnt");
-let lastScore = Number(localStorage.getItem("myPop"));
+var textCnt = document.getElementById("text.cnt");
+var lastScore = Number(localStorage.getItem("myPop"));
 setInterval(() => {
   try {
-    let nowScore = Number(textCnt.innerText);
-    let diff = nowScore - lastScore;
+    var nowScore = Number(textCnt.innerText);
+    var diff = nowScore - lastScore;
     lastScore = nowScore;
 
     if (diff > 100) {

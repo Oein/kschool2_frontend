@@ -15,7 +15,7 @@ import Jo from "../components/eventAlert/jocoding";
 import { ToastContainer } from "react-toastify";
 
 export default function App({ Component, pageProps }: AppProps) {
-  let [alertOpen, setAlertOpen] = useState(true);
+  var [alertOpen, setAlertOpen] = useState(true);
 
   console.log(
     "%c%s",

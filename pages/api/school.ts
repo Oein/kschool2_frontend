@@ -2,10 +2,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 
-const KEY = process.env.NEIS_API_KEY;
-const INDEX_MAX = process.env.SCHOOL_INDEX_MAX;
+var KEY = process.env.NEIS_API_KEY;
+var INDEX_MAX = process.env.SCHOOL_INDEX_MAX;
 
-const allowCors = (fn: any) => async (req: any, res: any) => {
+var allowCors = (fn: any) => async (req: any, res: any) => {
   res.setHeader("Access-Control-Allow-Credentials", true);
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader(
@@ -28,15 +28,15 @@ export default allowCors(function handler(
   res: NextApiResponse<any>
 ) {
   return new Promise<void>(async (resolve, reject) => {
-    let { schoolName } = req.query;
+    var { schoolName } = req.query;
 
     schoolName ||= "";
 
     try {
-      const URL = encodeURI(
+      var URL = encodeURI(
         `https://open.neis.go.kr/hub/schoolInfo?Type=json&pIndex=1&pSize=${INDEX_MAX}&KEY=${KEY}&SCHUL_NM=${schoolName}`
       );
-      const { data } = await axios.get(URL);
+      var { data } = await axios.get(URL);
 
       res.status(200).json({ data });
       resolve();

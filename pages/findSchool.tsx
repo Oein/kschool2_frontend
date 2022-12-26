@@ -4,9 +4,9 @@ import { useState } from "react";
 import { fetchSchool } from "../functions/fetchSchool";
 
 export default function FindSchool() {
-  let router = useRouter();
-  let [loading, setLoading] = useState(false);
-  let [schools, setSchools] = useState<
+  var router = useRouter();
+  var [loading, setLoading] = useState(false);
+  var [schools, setSchools] = useState<
     {
       schoolName: string;
       cityProvince: string;
@@ -14,9 +14,9 @@ export default function FindSchool() {
       schoolAddress: string;
     }[]
   >([]);
-  let [schoolName, setSchoolName] = useState("");
+  var [schoolName, setSchoolName] = useState("");
 
-  const getSchool = async () => {
+  var getSchool = async () => {
     if (
       schoolName.toLocaleLowerCase().replaceAll(" ", "") ==
       "nevergonnagiveyouup"

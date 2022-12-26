@@ -1,11 +1,11 @@
-const showRank = (rank: number) => {
+var showRank = (rank: number) => {
   if (rank == 1) return "🥇";
   if (rank == 2) return "🥈";
   if (rank == 3) return "🥉";
   return rank;
 };
 
-const comma = (x: number) => {
+var comma = (x: number) => {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 

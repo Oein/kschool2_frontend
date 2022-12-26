@@ -5,10 +5,10 @@ import style from "../styles/darkmode.module.css";
 import { FaMoon, FaSun } from "react-icons/fa";
 
 export default function DarkMode() {
-  let [darkmode, setDarkMode] = useState(false);
+  var [darkmode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    let dark = localStorage.getItem("dark");
+    var dark = localStorage.getItem("dark");
 
     if (!dark) {
       localStorage.setItem("dark", "0");

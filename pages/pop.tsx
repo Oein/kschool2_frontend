@@ -17,12 +17,12 @@ import DarkMode from "../components/darkMode";
 import getSession from "../functions/getSeason";
 import errorHandle from "../functions/axiosErrorHandle";
 
-const PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
-const POP_SERVER =
+var PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
+var POP_SERVER =
   "https://port-0-kschool2-backend-20z52flc2w05e1.gksl2.cloudtype.app";
-const LEADERBOARD_SERVER =
+var LEADERBOARD_SERVER =
   "https://port-0-kschool2-leaderboard-20z52flc2w05e1.gksl2.cloudtype.app";
-const MAX_POP_LIMIT = 200;
+var MAX_POP_LIMIT = 200;
 
 function getPopImage(i: number) {
   if (i == 0)
@@ -34,7 +34,7 @@ function getPopImage(i: number) {
   };
 }
 
-const showRank = (rank: number) => {
+var showRank = (rank: number) => {
   if (rank == 1) return "🥇";
   if (rank == 2) return "🥈";
   if (rank == 3) return "🥉";
@@ -42,36 +42,36 @@ const showRank = (rank: number) => {
 };
 
 export default function Pop() {
-  const router = useRouter();
+  var router = useRouter();
 
-  let [schoolCount, setSchoolCount] = useState("-");
-  let [schoolRank, setSchoolRank] = useState("-");
-  let [schoolName, setSchoolName] = useState("-");
-  let [globalCount, setGlobalCount] = useState("-");
-  let [personalCnt, setPersonalCnt] = useState("-");
-  let [leaderboardOpened, setLeaderboardOpened] = useState(false);
-  let [leaderboard, setLeaderboard] = useState<Rank[]>([]);
-  let [totalSchoolCount, setTotalSchoolCount] = useState(0);
-  let [captchaAllowed, setCaptchaAllowed] = useState(false);
-  let [popCount, setPopCount] = useState(0);
-  let [easterClick, setEasterClick] = useState(0);
+  var [schoolCount, setSchoolCount] = useState("-");
+  var [schoolRank, setSchoolRank] = useState("-");
+  var [schoolName, setSchoolName] = useState("-");
+  var [globalCount, setGlobalCount] = useState("-");
+  var [personalCnt, setPersonalCnt] = useState("-");
+  var [leaderboardOpened, setLeaderboardOpened] = useState(false);
+  var [leaderboard, setLeaderboard] = useState<Rank[]>([]);
+  var [totalSchoolCount, setTotalSchoolCount] = useState(0);
+  var [captchaAllowed, setCaptchaAllowed] = useState(false);
+  var [popCount, setPopCount] = useState(0);
+  var [easterClick, setEasterClick] = useState(0);
 
-  const getPersonalCnt = () => {
+  var getPersonalCnt = () => {
     return parseInt(
       localStorage.getItem(PERSONALCOUNT_LOCALSTORAGE_KEY) || "0"
     );
   };
-  const refreshLeader = () => {
+  var refreshLeader = () => {
     axios
       .get(`${LEADERBOARD_SERVER}/`)
       .then((v) => {
-        let strg = v.data as string;
-        let strx = strg.split("*");
-        let str = strx[0] as string;
-        let cnt = strx[1];
-        let lb: Rank[] = [];
+        var strg = v.data as string;
+        var strx = strg.split("*");
+        var str = strx[0] as string;
+        var cnt = strx[1];
+        var lb: Rank[] = [];
         str.split("/").forEach((v, i) => {
-          let ox = v.split(".");
+          var ox = v.split(".");
           lb.push({
             pops: ox[1],
             schoolName: ox[0],
@@ -83,7 +83,7 @@ export default function Pop() {
       })
       .catch((err) => errorHandle);
   };
-  const onCaptchaVerify = (v: any) => {
+  var onCaptchaVerify = (v: any) => {
     setTimeout(() => {
       setCaptchaAllowed((prev) => true);
       axios
@@ -100,8 +100,8 @@ export default function Pop() {
                 )}`
               )
               .then((v) => {
-                let x = v.data as string;
-                let y = x.split("/");
+                var x = v.data as string;
+                var y = x.split("/");
                 setSchoolCount(y[2]);
                 setSchoolRank(y[1]);
                 setGlobalCount(y[0]);
@@ -114,13 +114,13 @@ export default function Pop() {
         .catch((err) => errorHandle);
     }, 500);
   };
-  const getCount = () => {
+  var getCount = () => {
     return popCount;
   };
-  const getCaptchaAllowed = () => {
+  var getCaptchaAllowed = () => {
     return captchaAllowed;
   };
-  const sendPop = () => {
+  var sendPop = () => {
     setCaptchaAllowed((prev) => {
       setPopCount((prevC) => {
         if (prev && prevC > 0)
@@ -131,8 +131,8 @@ export default function Pop() {
               )}&count=${Math.min(prevC, MAX_POP_LIMIT)}&token=${window.token}`
             )
             .then((v) => {
-              let x = v.data as string;
-              let y = x.split("/");
+              var x = v.data as string;
+              var y = x.split("/");
               window.token = y[3];
               setGlobalCount(y[0]);
               setSchoolCount(y[2]);
@@ -150,14 +150,14 @@ export default function Pop() {
     setInterval(() => {}, 10 * 1000);
   }, []);
   useEffect(() => {
-    const usingMacro = () => {
+    var usingMacro = () => {
       window.localStorage.setItem("macro", "1");
       router.push("/usingMacro");
-      let x = parseInt(localStorage.getItem("macroed") || "0") + 1;
+      var x = parseInt(localStorage.getItem("macroed") || "0") + 1;
       localStorage.setItem("macroed", x.toString());
     };
-    const animate = () => {
-      let el = document.getElementById("text.cnt") as HTMLDivElement;
+    var animate = () => {
+      var el = document.getElementById("text.cnt") as HTMLDivElement;
       el.style.animationName = "tr";
       setTimeout(() => {
         el.style.animationName = "";
@@ -167,7 +167,7 @@ export default function Pop() {
         Math.floor(Math.random() * 5).toString()
       );
     };
-    const pop = () => {
+    var pop = () => {
       localStorage.setItem(
         PERSONALCOUNT_LOCALSTORAGE_KEY,
         (getPersonalCnt() + 1).toString()

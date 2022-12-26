@@ -1,6 +1,6 @@
 export default function UsingMacro() {
   if (typeof window !== "undefined") {
-    let x = document.getElementsByClassName(
+    var x = document.getElementsByClassName(
       "alert-container"
     )[0] as HTMLDivElement;
 

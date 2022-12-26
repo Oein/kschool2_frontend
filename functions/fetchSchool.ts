@@ -1,16 +1,16 @@
-export const fetchSchool = async (schoolName: string) => {
+export var fetchSchool = async (schoolName: string) => {
   try {
-    const url = encodeURI(`/api/school?schoolName=${schoolName}`);
-    const response = await fetch(url, {});
-    const rawData = await response.json();
+    var url = encodeURI(`/api/school?schoolName=${schoolName}`);
+    var response = await fetch(url, {});
+    var rawData = await response.json();
 
     if (rawData === null) return;
-    const data = rawData.data;
+    var data = rawData.data;
 
     if (!("schoolInfo" in data)) return [];
 
-    const schoolData = data["schoolInfo"][1]["row"];
-    let schoolList: any[] = [];
+    var schoolData = data["schoolInfo"][1]["row"];
+    var schoolList: any[] = [];
     schoolData.forEach((school: any) => {
       schoolList.push({
         schoolName: school.SCHUL_NM,

@@ -1,12 +1,12 @@
 import axios from "axios";
 import errorHandle from "../functions/axiosErrorHandle";
 
-const POP_SERVER =
+var POP_SERVER =
   "https://port-0-kschool2-backend-20z52flc2w05e1.gksl2.cloudtype.app";
 
 export default function UsingMacro() {
   if (typeof window !== "undefined") {
-    let x = document.getElementsByClassName(
+    var x = document.getElementsByClassName(
       "alert-container"
     )[0] as HTMLDivElement;
 

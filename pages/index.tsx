@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
 
 export default function Main() {
-  let router = useRouter();
+  var router = useRouter();
   if (typeof window !== "undefined" && window) {
     if (
       typeof window.navigator !== "undefined" &&
       window.navigator &&
       window.navigator.webdriver
     ) {
-      let x = parseInt(localStorage.getItem("macroed") || "0") + 1;
+      var x = parseInt(localStorage.getItem("macroed") || "0") + 1;
       localStorage.setItem("macroed", x.toString());
       router.push("/usingMacro");
     }
