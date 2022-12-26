@@ -75,7 +75,7 @@ export default function Pop() {
       setLeaderboard(lb);
     });
     axios.get(`${LEADERBOARD_SERVER}/cnt`).then((v) => {
-      setTotalSchoolCount(parseInt(v.data.cnt));
+      setTotalSchoolCount(parseInt(v.data));
     });
   };
   const onCaptchaVerify = (v: any) => {
