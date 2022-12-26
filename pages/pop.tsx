@@ -62,7 +62,17 @@ export default function Pop() {
   };
   const refreshLeader = () => {
     axios.get(`${LEADERBOARD_SERVER}/`).then((v) => {
-      setLeaderboard(v.data);
+      let str = v.data as string;
+      let lb: Rank[] = [];
+      str.split("/").forEach((v, i) => {
+        let ox = v.split(".");
+        lb.push({
+          pops: ox[1],
+          schoolName: ox[0],
+          schoolRank: (i + 1).toString(),
+        });
+      });
+      setLeaderboard(lb);
     });
     axios.get(`${LEADERBOARD_SERVER}/cnt`).then((v) => {
       setTotalSchoolCount(parseInt(v.data.cnt));
