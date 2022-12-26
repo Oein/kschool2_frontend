@@ -13,6 +13,7 @@ import HCaptcha from "@hcaptcha/react-hcaptcha";
 import axios from "axios";
 import Link from "next/link";
 import SnowFlakes from "../components/snowFlake";
+import DarkMode from "../components/darkMode";
 
 const PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
 const POP_SERVER =
@@ -222,6 +223,7 @@ export default function Pop() {
               {easterClick > 1000 ? "LOOHCS-K" : "K-SCHOOL"}
             </h1>
             <img className={style.jo} src="/jo.png" draggable="false" alt="" />
+            <DarkMode />
           </div>
 
           <div className={style.school}>
@@ -278,7 +280,7 @@ export default function Pop() {
             {getCaptchaAllowed() ? "a" : "b"}
           </div>
         </div>
-        <style>{`* {color: white;}`}</style>
+        <style>{`* {color: var(--color);}`}</style>
       </NoSSR>
     );
 
@@ -287,6 +289,7 @@ export default function Pop() {
       <div className={style.title}>
         <h1>K-SCHOOL</h1>
         <img className={style.jo} src="/jo.png" draggable="false" alt="" />
+        <DarkMode />
       </div>
 
       <div className={style.captchaContainer}>
@@ -311,6 +314,7 @@ export default function Pop() {
         {getCount()}
         {getCaptchaAllowed() ? "a" : "b"}
       </div>
+      <style>{`* {color: var(--color);}`}</style>
     </>
   );
 }

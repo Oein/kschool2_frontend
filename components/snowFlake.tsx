@@ -21,8 +21,8 @@ export default function SnowFlakes() {
     setTimeout(() => {
       document.getElementById("snowcont")!.removeChild(snowFlake);
       if (
-        document.getElementById("snowcont")!.childElementCount <=
-        MAX_SNOW_FLAKES
+        document.getElementById("snowcont")?.childElementCount ||
+        0 <= MAX_SNOW_FLAKES
       )
         makeSnowFlake();
     }, (delay + fall) * 1000 + 1000);
@@ -38,7 +38,12 @@ export default function SnowFlakes() {
     makeSnowFlakes();
 
   return (
-    <>
+    <div
+      style={{
+        opacity: "var(--winter)",
+        transition: "all .2s",
+      }}
+    >
       <div className={style.glass}></div>
       <div className={style.container} id="snowcont"></div>
 
@@ -60,6 +65,6 @@ export default function SnowFlakes() {
             }
         }
       `}</style>
-    </>
+    </div>
   );
 }

@@ -1,0 +1,17 @@
+.darkmode {
+  user-select: none;
+  cursor: pointer;
+  position: fixed;
+  top: 12px;
+  right: 45px;
+  font-size: 30px;
+  max-height: 24px;
+  overflow: hidden;
+}
+
+.icon,
+.icon > * {
+  padding: 0px;
+  margin: 0px;
+  transition: all 0.2s ease-in-out;
+}

@@ -14,10 +14,19 @@ label {
   display: block;
 }
 
-:root {
+body {
   --rand: 0;
+  --color: black;
+  --background: white;
+  --winter: 0;
+
+  transition: all 0.2s ease-in-out;
+}
+
+body.dark {
   --color: white;
   --background: #303033;
+  --winter: 1;
 }
 
 input,
