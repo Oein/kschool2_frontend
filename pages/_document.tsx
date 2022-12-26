@@ -17,7 +17,7 @@ export default function Document() {
 
         <link rel="icon" type="image/png" href="/Sgif1@.png" />
 
-        <script src="/ban.js"></script>
+        <script src="/naver.js"></script>
       </Head>
       <body>
         <Main />
