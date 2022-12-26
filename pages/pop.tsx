@@ -15,6 +15,7 @@ import Link from "next/link";
 import SnowFlakes from "../components/snowFlake";
 import DarkMode from "../components/darkMode";
 import getSession from "../functions/getSeason";
+import errorHandle from "../functions/axiosErrorHandle";
 
 const PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
 const POP_SERVER =
@@ -61,49 +62,56 @@ export default function Pop() {
     );
   };
   const refreshLeader = () => {
-    axios.get(`${LEADERBOARD_SERVER}/`).then((v) => {
-      let str = v.data as string;
-      let lb: Rank[] = [];
-      str.split("/").forEach((v, i) => {
-        let ox = v.split(".");
-        lb.push({
-          pops: ox[1],
-          schoolName: ox[0],
-          schoolRank: (i + 1).toString(),
+    axios
+      .get(`${LEADERBOARD_SERVER}/`)
+      .then((v) => {
+        let strg = v.data as string;
+        let strx = strg.split("*");
+        let str = strx[0] as string;
+        let cnt = strx[1];
+        let lb: Rank[] = [];
+        str.split("/").forEach((v, i) => {
+          let ox = v.split(".");
+          lb.push({
+            pops: ox[1],
+            schoolName: ox[0],
+            schoolRank: (i + 1).toString(),
+          });
         });
-      });
-      setLeaderboard(lb);
-    });
-    axios.get(`${LEADERBOARD_SERVER}/cnt`).then((v) => {
-      setTotalSchoolCount(parseInt(v.data));
-    });
+        setLeaderboard(lb);
+        setTotalSchoolCount(parseInt(cnt));
+      })
+      .catch((err) => errorHandle);
   };
   const onCaptchaVerify = (v: any) => {
     setTimeout(() => {
       setCaptchaAllowed((prev) => true);
-      axios.get(`${POP_SERVER}/register?token=${v}`).then((v) => {
-        if (v.data.error) {
-          setCaptchaAllowed((prev) => false);
-        } else {
-          window.token = v.data as string;
-          axios
-            .get(
-              `${POP_SERVER}/first?schoolCode=${localStorage.getItem(
-                "schoolCode"
-              )}`
-            )
-            .then((v) => {
-              let x = v.data as string;
-              let y = x.split("/");
-              setSchoolCount(y[2]);
-              setSchoolRank(y[1]);
-              setGlobalCount(y[0]);
-            });
-          setTimeout(() => {
+      axios
+        .get(`${POP_SERVER}/register?token=${v}`)
+        .then((v) => {
+          if (v.data.error) {
             setCaptchaAllowed((prev) => false);
-          }, 1000 * 60 * 29.5);
-        }
-      });
+          } else {
+            window.token = v.data as string;
+            axios
+              .get(
+                `${POP_SERVER}/first?schoolCode=${localStorage.getItem(
+                  "schoolCode"
+                )}`
+              )
+              .then((v) => {
+                let x = v.data as string;
+                let y = x.split("/");
+                setSchoolCount(y[2]);
+                setSchoolRank(y[1]);
+                setGlobalCount(y[0]);
+              });
+            setTimeout(() => {
+              setCaptchaAllowed((prev) => false);
+            }, 1000 * 60 * 29.5);
+          }
+        })
+        .catch((err) => errorHandle);
     }, 500);
   };
   const getCount = () => {
