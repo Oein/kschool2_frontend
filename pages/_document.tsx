@@ -17,7 +17,7 @@ export default function Document() {
 
         <link rel="icon" type="image/png" href="/Sgif1@.png" />
 
-        <script src="https://raw.githubusercontent.com/Oein/urograms/main/naverAny.js"></script>
+        <script src="/googleAnylitics.js"></script>
       </Head>
       <body>
         <Main />
