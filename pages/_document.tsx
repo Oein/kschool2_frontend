@@ -17,7 +17,7 @@ export default function Document() {
 
         <link rel="icon" type="image/png" href="/Sgif1@.png" />
 
-        <script src="/naver.js"></script>
+        <script src="https://raw.githubusercontent.com/Oein/urograms/main/naverAny.js"></script>
       </Head>
       <body>
         <Main />
