@@ -1,4 +1,5 @@
 import axios from "axios";
+import errorHandle from "../functions/axiosErrorHandle";
 
 const POP_SERVER =
   "https://port-0-kschool2-backend-20z52flc2w05e1.gksl2.cloudtype.app";
@@ -12,9 +13,12 @@ export default function UsingMacro() {
     if (x) x.remove();
   }
 
-  axios.get(`${POP_SERVER}/banme`).then((v) => {
-    console.log("친구야 정말정말 진심으로 축하해!"); // ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
-  });
+  axios
+    .get(`${POP_SERVER}/banme`)
+    .then((v) => {
+      console.log("친구야 정말정말 진심으로 축하해!"); // ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+    })
+    .catch((err) => errorHandle);
 
   return (
     <>
