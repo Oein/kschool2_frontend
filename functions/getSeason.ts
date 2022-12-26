@@ -3,8 +3,8 @@ export default function getSession() {
   let mon = d.getMonth() + 1;
   let day = d.getDate();
 
-  if (mon == 12 && day >= 20 && day <= 30) return "-christ";
-  if (mon == 1 && day <= 7) return "-newyear";
+  if (mon == 12 && day >= 24 && day <= 25) return "-christ";
+  if ((mon == 1 && day <= 2) || (mon == 12 && day == 31)) return "-newyear";
 
   return "";
 }
