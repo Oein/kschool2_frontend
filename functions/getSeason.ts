@@ -5,6 +5,7 @@ export default function getSession() {
 
   if (mon == 12 && day >= 24 && day <= 25) return "-christ";
   if ((mon == 1 && day <= 2) || (mon == 12 && day == 31)) return "-newyear";
+  if (mon == 5 && day == 5) return "-child";
 
   return "";
 }
