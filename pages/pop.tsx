@@ -14,6 +14,7 @@ import axios from "axios";
 import Link from "next/link";
 import SnowFlakes from "../components/snowFlake";
 import DarkMode from "../components/darkMode";
+import getSession from "../functions/getSeason";
 
 const PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
 const POP_SERVER =
@@ -23,8 +24,13 @@ const LEADERBOARD_SERVER =
 const MAX_POP_LIMIT = 200;
 
 function getPopImage(i: number) {
-  if (i == 0) return style.popImage0;
-  else return style.popImage1;
+  if (i == 0)
+    return {
+      backgroundImage: `url(/punch0${getSession()}.png)`,
+    };
+  return {
+    backgroundImage: `url(/punch1${getSession()}.png)`,
+  };
 }
 
 const showRank = (rank: number) => {
@@ -42,7 +48,6 @@ export default function Pop() {
   let [schoolName, setSchoolName] = useState("-");
   let [globalCount, setGlobalCount] = useState("-");
   let [personalCnt, setPersonalCnt] = useState("-");
-  let [imageIDX, setImageIDX] = useState(0);
   let [leaderboardOpened, setLeaderboardOpened] = useState(false);
   let [leaderboard, setLeaderboard] = useState<Rank[]>([]);
   let [totalSchoolCount, setTotalSchoolCount] = useState(0);
@@ -144,7 +149,6 @@ export default function Pop() {
         PERSONALCOUNT_LOCALSTORAGE_KEY,
         (getPersonalCnt() + 1).toString()
       );
-      setImageIDX((imageIDX + 1) % 2);
       setPersonalCnt(getPersonalCnt().toString());
       animate();
       setPopCount((prev) => prev + 1);
@@ -178,7 +182,7 @@ export default function Pop() {
         } else usingMacro();
       };
     }
-  }, [captchaAllowed, imageIDX, personalCnt, router, setPersonalCnt]);
+  }, [captchaAllowed, personalCnt, router, setPersonalCnt]);
 
   if (getCaptchaAllowed())
     return (
@@ -194,14 +198,14 @@ export default function Pop() {
           />
         ) : null}
         <img
-          src="/Sgif1@.png"
+          src={`/punch0${getSession()}.png`}
           alt=""
           style={{
             display: "none",
           }}
         />
         <img
-          src="/Sgif2@.png"
+          src={`/punch1${getSession()}.png`}
           alt=""
           style={{
             display: "none",
@@ -251,7 +255,8 @@ export default function Pop() {
             {personalCnt}
           </div>
           <div
-            className={classNames([style.popImage, getPopImage(imageIDX)])}
+            className={classNames([style.popImage])}
+            style={getPopImage(popCount % 2)}
           ></div>
           <div
             className={style.leaderboardContx}
@@ -280,7 +285,7 @@ export default function Pop() {
             {getCaptchaAllowed() ? "a" : "b"}
           </div>
         </div>
-        <style>{`* {color: var(--color);}`}</style>
+        <style>{`* {color: var(--color);}}`}</style>
       </NoSSR>
     );
 

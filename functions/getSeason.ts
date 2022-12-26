@@ -1,9 +1,10 @@
 export default function getSession() {
   let d = new Date();
-  let m = d.getMonth() + 1;
+  let mon = d.getMonth() + 1;
+  let day = d.getDate();
 
-  if (m == 11 || m <= 3) return "winter";
-  if (m >= 4 && m <= 6) return "spring";
-  if (m >= 7 && m <= 9) return "summer";
-  if (m == 10) return "fall";
+  if (mon == 12 && day >= 20 && day <= 30) return "-christ";
+  if (mon == 1 && day <= 7) return "-newyear";
+
+  return "";
 }

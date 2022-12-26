@@ -27,12 +27,6 @@
   height: 50px;
   margin: 0 auto;
 }
-.popImage0 {
-  background-image: url(/Sgif1@.png);
-}
-.popImage1 {
-  background-image: url(/Sgif2@.png);
-}
 .popImage {
   position: absolute;
   margin: 0 auto;
