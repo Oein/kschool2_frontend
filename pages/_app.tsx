@@ -1,16 +1,18 @@
 // css
 import "../styles/globals.css";
 import "../styles/alert.css";
+import "react-toastify/dist/ReactToastify.css";
 
 // type
 import type { AppProps } from "next/app";
 
 // use
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 // alert component
 import Alert from "../components/Alert";
 import Jo from "../components/eventAlert/jocoding";
+import { ToastContainer } from "react-toastify";
 
 export default function App({ Component, pageProps }: AppProps) {
   let [alertOpen, setAlertOpen] = useState(true);
@@ -74,6 +76,7 @@ export default function App({ Component, pageProps }: AppProps) {
       ) : null}
 
       <Component {...pageProps} />
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </>
   );
 }
