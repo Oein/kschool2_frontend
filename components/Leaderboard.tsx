@@ -34,7 +34,7 @@ export default function Leaderboard({
               fontSize: "18px",
               justifyContent: "left",
               display: "inline",
-              color: "var(black)",
+              color: "black",
             }}
           >
             🏆 랭킹 ({totalSchoolCount} 학교 참여)
@@ -50,23 +50,23 @@ export default function Leaderboard({
                     <li className="school" key={i}>
                       <div
                         className="schoolRank fontSize"
-                        style={{ color: "var(black)" }}
+                        style={{ color: "black" }}
                       >
                         {showRank(i + 1)}
                       </div>
                       <div
                         className="schoolName fontSize"
-                        style={{ color: "var(black)" }}
+                        style={{ color: "black" }}
                       >
                         {r.schoolName}
                       </div>
                       <span
                         className="schoolTier tierIcon {tier(r.pop, r.schoolRank)}"
-                        style={{ color: "var(black)" }}
+                        style={{ color: "black" }}
                       ></span>
                       <div
                         className="schoolScore fontSize"
-                        style={{ color: "var(black)" }}
+                        style={{ color: "black" }}
                       >
                         {comma(parseInt(r.pops))}
                       </div>
@@ -74,10 +74,7 @@ export default function Leaderboard({
                   );
                 })
               ) : (
-                <li
-                  className="loading fontSize"
-                  style={{ color: "var(black)" }}
-                >
+                <li className="loading fontSize" style={{ color: "black" }}>
                   로딩중... ⏳
                 </li>
               )}
