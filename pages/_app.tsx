@@ -52,7 +52,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   if (typeof location !== "undefined")
     console.log(
-      `축하드립니다! 콘솔에 들어오셨네요. 콘솔이 뚫렸으니 👉( ${location.protocol}//${location.host}/reportBugs )👈를 눌러 버그를 제보합시다! 위에 링크에 뚫은 방법을 담은 영상과 계좌 번호를 업로드 하시면 저희가 체크하고 이미 알고 있는 방법이 아니면 어썸링님의 사비로 소정의 money가 지급됩니다.`
+      `축하드립니다! 콘솔에 들어오셨네요. 콘솔이 뚫렸으니 👉( ${location.protocol}//${location.host}/reportBugs )👈를 눌러 버그를 제보합시다! 위에 링크에 뚫은 방법을 담은 영상과 계좌 번호를 업로드 하시면 어썸링님의 사비로 소정의 money가 지급됩니다.`
     );
 
   if (typeof localStorage !== "undefined") {
