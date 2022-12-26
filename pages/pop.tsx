@@ -85,7 +85,7 @@ export default function Pop() {
         if (v.data.error) {
           setCaptchaAllowed((prev) => false);
         } else {
-          window.token = v.data.token;
+          window.token = v.data as string;
           axios
             .get(
               `${POP_SERVER}/first?schoolCode=${localStorage.getItem(
@@ -100,7 +100,6 @@ export default function Pop() {
               setGlobalCount(y[0]);
             });
           setTimeout(() => {
-            // regenerate hCaptcha
             setCaptchaAllowed((prev) => false);
           }, 1000 * 60 * 29.5);
         }
