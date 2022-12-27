@@ -68,10 +68,11 @@ export default function App({ Component, pageProps }: AppProps) {
 
   if (typeof localStorage !== "undefined") {
     if (
-      localStorage.getItem("macroed") ||
-      (0 > 5 && location.pathname !== "/reportBugs")
+      parseInt(localStorage.getItem("macroed") || "0") == 5 &&
+      location.pathname !== "/reportBugs"
     )
       location.href = "/reportBugs";
+    localStorage.setItem("macroed", "6");
   }
 
   return (
