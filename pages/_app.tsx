@@ -7,15 +7,24 @@ import "react-toastify/dist/ReactToastify.css";
 import type { AppProps } from "next/app";
 
 // use
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // alert component
 import Alert from "../components/Alert";
 import Jo from "../components/eventAlert/jocoding";
 import { ToastContainer } from "react-toastify";
+import axios from "axios";
 
 export default function App({ Component, pageProps }: AppProps) {
   var [alertOpen, setAlertOpen] = useState(true);
+
+  useEffect(() => {
+    if (typeof location !== "undefined")
+      axios.get("https://api.ip.pe.kr/json/").then((v) => {
+        if (v.data.country_code !== "KR" && location.pathname != "/notKR")
+          location.href == "/notKR";
+      });
+  }, []);
 
   console.log(
     "%c%s",
