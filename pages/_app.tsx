@@ -68,7 +68,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
   if (typeof localStorage !== "undefined") {
     if (localStorage.getItem("macroed") || 0 > 5) location.href = "/reportBugs";
-    else if (localStorage.getItem("macroed")) location.href = "/usingMacro";
   }
 
   return (
