@@ -18,7 +18,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 var textCnt = document.getElementById("text.cnt");
-var lastScore = Number(localStorage.getItem("myPop"));
+var lastScore = Number(localStorage.getItem("myPop") || "0");
 setInterval(() => {
   try {
     var nowScore = Number(textCnt.innerText);
@@ -30,5 +30,6 @@ setInterval(() => {
     }
   } catch (e) {
     textCnt = document.getElementById("text.cnt");
+    lastScore = Number(localStorage.getItem("myPop") || "0");
   }
 }, 1000);
