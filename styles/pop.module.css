@@ -32,11 +32,10 @@
   margin: 0 auto;
   left: 0;
   right: 0;
-  height: 50%;
+  height: 40%;
   width: 100%;
   max-width: 800px;
   max-height: 800px;
-  border-radius: 12px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -44,6 +43,17 @@
   text-align: center;
   box-sizing: inherit;
   display: block;
+}
+.ads {
+  position: fixed;
+  align-items: center;
+  align-self: center;
+  align-content: center;
+  text-align: center;
+  width: 100vw;
+  height: fit-content;
+  text-align: center;
+  bottom: 60px;
 }
 .mainBtn {
   margin: 15px;

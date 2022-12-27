@@ -279,11 +279,20 @@ export default function Pop() {
             className={classNames([style.popImage])}
             style={getPopImage(popCount % 2)}
           ></div>
-          <iframe
-            width="728"
-            height="90"
-            src="https://tab2.clickmon.co.kr/pop/wp_ad_728.php?PopAd=CM_M_1003067%7C%5E%7CCM_A_1124013%7C%5E%7CAdver_M_1046207&mon_rf=REFERRER_URL&mon_direct_url=URLENCODE_PASSBACK_INPUT"
-          ></iframe>
+          <div className={style.ads}>
+            <center>
+              <iframe
+                style={{
+                  overflow: "hidden",
+                  border: "none",
+                  display: "block",
+                }}
+                width="724"
+                scrolling="no"
+                src="https://tab2.clickmon.co.kr/pop/wp_ad_728.php?PopAd=CM_M_1003067%7C%5E%7CCM_A_1124013%7C%5E%7CAdver_M_1046207&mon_rf=REFERRER_URL&mon_direct_url=URLENCODE_PASSBACK_INPUT"
+              ></iframe>
+            </center>
+          </div>
           <div
             className={style.leaderboardContx}
             onClick={() => {
