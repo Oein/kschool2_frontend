@@ -25,10 +25,11 @@ setInterval(() => {
     var diff = nowScore - lastScore;
     lastScore = nowScore;
 
-    if (diff > 100) {
+    if (diff > 200) {
       location.href = "/usingMacro";
     }
   } catch (e) {
     textCnt = document.getElementById("text.cnt");
+    lastScore = Number(localStorage.getItem("myPop"));
   }
 }, 1000);
