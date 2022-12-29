@@ -11,12 +11,26 @@ export default function SnowFlakes() {
     var snowFlake = document.createElement("div");
     var delay = Math.random() * 10;
     var fall = Math.random() * 10 + 10;
+    var randomX = Math.random() * window.screen.width;
+    var randomW = Math.floor(Math.random() * 8);
     snowFlake.className = "snowflake";
-    snowFlake.style.left = `${Math.random() * window.screen.width}px`;
-    snowFlake.style.animationDelay = `${delay}s`;
+    snowFlake.style.left = `${randomX}px`;
     snowFlake.style.opacity = `${Math.random() / 2 + 0.5}`;
-    snowFlake.style.animation = `fall ${fall}s linear`;
+    snowFlake.style.transition = `all ${fall}s linear`;
+    snowFlake.style.width = `${randomW}px`;
+    snowFlake.style.height = `${randomW}px`;
+    snowFlake.style.transform = "translateY(0vh)";
     document.getElementById("snowcont")?.appendChild(snowFlake);
+    setTimeout(() => {
+      snowFlake.style.opacity = "0";
+      snowFlake.style.transform = "translateY(100vh)";
+      snowFlake.style.left = `${
+        randomX +
+        Math.floor(
+          (Math.random() * window.screen.width) / 4 - window.screen.width / 8
+        )
+      }px`;
+    }, 100);
 
     setTimeout(() => {
       document.getElementById("snowcont")!.removeChild(snowFlake);
@@ -49,20 +63,10 @@ export default function SnowFlakes() {
 
       <style>{`
         .snowflake {
-            width: 8px;
-            height: 8px;
             border-radius: 50%;
             background-color: white;
             position: absolute;
             top: -8px;
-        }
-
-        @keyframes fall {
-            from {}
-            to {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
         }
       `}</style>
     </div>
