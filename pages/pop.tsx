@@ -53,6 +53,7 @@ export default function Pop() {
   var [captchaAllowed, setCaptchaAllowed] = useState(false);
   var [popCount, setPopCount] = useState(0);
   var [easterClick, setEasterClick] = useState(0);
+  let [clickPerSecond, setClickPerSecond] = useState(0);
 
   var getPersonalCnt = () => {
     return parseInt(
@@ -145,9 +146,6 @@ export default function Pop() {
     setInterval(sendPop, 20 * 1000);
   }, []);
   useEffect(() => {
-    setInterval(() => {}, 10 * 1000);
-  }, []);
-  useEffect(() => {
     var usingMacro = () => {
       window.localStorage.setItem("macro", "1");
       router.push("/usingMacro");
@@ -173,6 +171,15 @@ export default function Pop() {
       setPersonalCnt(getPersonalCnt().toString());
       animate();
       setPopCount((prev) => prev + 1);
+      setClickPerSecond((prev) => {
+        setTimeout(() => {
+          setClickPerSecond((prev) => {
+            if (prev <= 1) return 0;
+            return prev - 1;
+          });
+        }, 1000);
+        return prev + 2;
+      });
     };
 
     setSchoolName(localStorage.getItem("schoolName") || "-");
@@ -274,6 +281,25 @@ export default function Pop() {
 
           <div className={style.count} id="text.cnt">
             {personalCnt}
+          </div>
+          <div
+            className={classNames([style.count, style.cps])}
+            style={{
+              color:
+                clickPerSecond / 2 < 70
+                  ? "white"
+                  : clickPerSecond / 2 < 90
+                  ? "yellow"
+                  : clickPerSecond / 2 < 120
+                  ? "orange"
+                  : "red",
+              transform: `scale(${
+                1 + Math.max(clickPerSecond / 2 - 150, 0) / 1.1
+              })`,
+              transition: "all .3s",
+            }}
+          >
+            {clickPerSecond / 2} / sec
           </div>
           <div
             className={classNames([style.popImage])}
