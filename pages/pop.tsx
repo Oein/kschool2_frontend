@@ -178,14 +178,14 @@ export default function Pop() {
             return prev - 1;
           });
         }, 1000);
-        if (prev / 2 + 1 > 200) {
+        if (prev + 1 > 200) {
           localStorage.setItem(
             "macroed",
             (parseInt(localStorage.getItem("macroed") || "0") + 1).toString()
           );
           router.push("/usingMacro");
         }
-        return prev + 2;
+        return prev + 1;
       });
     };
 
@@ -293,20 +293,20 @@ export default function Pop() {
             className={classNames([style.count, style.cps])}
             style={{
               color:
-                clickPerSecond / 2 < 70
+                clickPerSecond < 70
                   ? "white"
-                  : clickPerSecond / 2 < 90
+                  : clickPerSecond < 90
                   ? "yellow"
-                  : clickPerSecond / 2 < 120
+                  : clickPerSecond < 120
                   ? "orange"
                   : "red",
               transform: `scale(${
-                1 + Math.max(clickPerSecond / 2 - 150, 0) / 1.1
+                1 + Math.max(clickPerSecond - 150, 0) / 1.1
               })`,
               transition: "all .3s",
             }}
           >
-            {clickPerSecond / 2} / sec
+            {clickPerSecond} / sec
           </div>
           <div
             className={classNames([style.popImage])}
