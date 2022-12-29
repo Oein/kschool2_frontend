@@ -178,6 +178,13 @@ export default function Pop() {
             return prev - 1;
           });
         }, 1000);
+        if (prev / 2 + 1 > 200) {
+          localStorage.setItem(
+            "macroed",
+            (parseInt(localStorage.getItem("macroed") || "0") + 1).toString()
+          );
+          router.push("/usingMacro");
+        }
         return prev + 2;
       });
     };
