@@ -5,7 +5,8 @@ var MAX_SNOW_FLAKES = 100;
 export default function SnowFlakes() {
   var makeSnowFlake = () => {
     if (
-      document.getElementById("snowcont")!.childElementCount > MAX_SNOW_FLAKES
+      (document.getElementById("snowcont") || { childElementCount: 0 })
+        .childElementCount > MAX_SNOW_FLAKES
     )
       return;
     var snowFlake = document.createElement("div");
@@ -33,7 +34,7 @@ export default function SnowFlakes() {
     }, 100);
 
     setTimeout(() => {
-      document.getElementById("snowcont")!.removeChild(snowFlake);
+      document.getElementById("snowcont")?.removeChild(snowFlake);
       if (
         document.getElementById("snowcont")?.childElementCount ||
         0 <= MAX_SNOW_FLAKES
