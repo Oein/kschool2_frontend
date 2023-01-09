@@ -16,6 +16,7 @@ import SnowFlakes from "../components/snowFlake";
 import DarkMode from "../components/darkMode";
 import getSession from "../functions/getSeason";
 import errorHandle from "../functions/axiosErrorHandle";
+import { toast } from "react-toastify";
 
 var PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
 var BACKEND =
@@ -54,6 +55,7 @@ export default function Pop() {
   var [popCount, setPopCount] = useState(0);
   var [easterClick, setEasterClick] = useState(0);
   let [clickPerSecond, setClickPerSecond] = useState(0);
+  let [macroed, setMacroed] = useState(false);
 
   var getPersonalCnt = () => {
     return parseInt(
@@ -154,6 +156,7 @@ export default function Pop() {
     };
     var animate = () => {
       var el = document.getElementById("text.cnt") as HTMLDivElement;
+      if (!el) return;
       el.style.animationName = "tr";
       setTimeout(() => {
         el.style.animationName = "";
@@ -164,6 +167,7 @@ export default function Pop() {
       );
     };
     var pop = () => {
+      if (macroed) return;
       localStorage.setItem(
         PERSONALCOUNT_LOCALSTORAGE_KEY,
         (getPersonalCnt() + 1).toString()
@@ -183,7 +187,12 @@ export default function Pop() {
             "macroed",
             (parseInt(localStorage.getItem("macroed") || "0") + 1).toString()
           );
-          router.push("/usingMacro");
+          setMacroed(true);
+          setTimeout(() => {
+            setMacroed(false);
+          }, 60 * 10);
+          localStorage.setItem("lastMacroed", new Date().getTime().toString());
+          return 0;
         }
         return prev + 1;
       });
@@ -218,6 +227,147 @@ export default function Pop() {
       };
     }
   }, [captchaAllowed, personalCnt, router, setPersonalCnt]);
+
+  useEffect(() => {
+    if (typeof localStorage == "undefined") return;
+    let v = localStorage.getItem("lastMacroed") || "0";
+    let dt = new Date(Number(v)).getTime();
+
+    let now = new Date().getTime();
+    let ten_min = 1000 * 60 * 10;
+
+    if ((localStorage.getItem("banned") || "") == "1") {
+      let one_day = 1000 * 60 * 60 * 24;
+      if (now - dt > one_day) {
+        localStorage.setItem("lastMacroed", "0");
+        localStorage.setItem("banned", "0");
+      }
+      return;
+    }
+
+    if (now - dt > ten_min) {
+      localStorage.setItem("lastMacroed", "0");
+    } else {
+      setMacroed(true);
+      let macroed = parseInt(localStorage.getItem("macroed") || "1");
+      if (macroed > 5 && (localStorage.getItem("banned") || "") != "1") {
+        localStorage.setItem("banned", "1");
+        axios.post(`${BACKEND}/banme`);
+      }
+    }
+  });
+
+  if (
+    typeof localStorage !== "undefined" &&
+    (localStorage.getItem("banned") || "0") == "1"
+  ) {
+    return (
+      <>
+        <div className="macro-container">
+          <div className="macro">
+            <span className="title">
+              🎉축하합니다!! 1일 타임아웃 당하였습니다!!🎉
+            </span>
+            <div className="contents">매크로 사용 5회 이상 감지되셨습니다!</div>
+
+            <div
+              style={{
+                borderTop: "1px solid #ccc",
+                paddingTop: "5px",
+                marginTop: "5px",
+              }}
+            >
+              ⛔ 1일 밴입니다. 밴 해지 요청은{" "}
+              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">👉여기👈</a>
+              에서 해주세요
+            </div>
+          </div>
+        </div>
+
+        <style>{`
+        .macro-container {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%,-50%);
+          border-radius: 16px;
+          border: 1px solid #ccc;
+          padding: 30px;
+        }
+
+        .title {
+          font-size: 20px;
+        }
+
+        .contents {
+          padding-top: 10px;
+          font-size: 17px;
+        }
+      `}</style>
+      </>
+    );
+  }
+
+  if (macroed) {
+    return (
+      <>
+        <div className="macro-container">
+          <div className="macro">
+            <span className="title">⚠️ 매크로 사용 감지</span>
+            <div className="contents">
+              최근 서버에 부담을 주는 가장 큰 원인인 매크로 사용을
+              자제해주셨으면 합니다.
+            </div>
+
+            <div
+              style={{
+                borderTop: "1px solid #ccc",
+                paddingTop: "5px",
+                marginTop: "5px",
+              }}
+            >
+              ⛔ 매크로 이용시 10분 밴입니다. 밴 해지 요청은{" "}
+              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">👉여기👈</a>
+              에서 해주세요. 또한 5회 매크로 이용시 영구밴 이니 조심하세요.
+              <p>
+                매크로 해지까지{" "}
+                {Math.floor(
+                  (new Date(
+                    Number(localStorage.getItem("lastMacroed") || "0")
+                  ).getTime() +
+                    1000 * 60 * 10 -
+                    new Date().getTime()) /
+                    1000
+                )}
+                초
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <style>{`
+      .macro-container {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        border-radius: 16px;
+        border: 1px solid #ccc;
+        padding: 30px;
+      }
+
+      .title {
+        font-size: 20px;
+      }
+
+      .contents {
+        padding-top: 10px;
+        font-size: 17px;
+      }
+    `}</style>
+      </>
+    );
+  }
 
   if (getCaptchaAllowed())
     return (
