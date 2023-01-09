@@ -326,11 +326,11 @@ export default function Pop() {
                 marginTop: "5px",
               }}
             >
-              ⛔ 매크로 이용시 10분 밴입니다. 밴 해지 요청은{" "}
+              ⛔ 매크로 이용시 10분 타임아웃입니다. 타임아웃 해지 요청은{" "}
               <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">👉여기👈</a>
               에서 해주세요. 또한 5회 매크로 이용시 영구밴 이니 조심하세요.
               <p>
-                매크로 해지까지{" "}
+                타임아웃 해지까지{" "}
                 {Math.floor(
                   (new Date(
                     Number(localStorage.getItem("lastMacroed") || "0")
