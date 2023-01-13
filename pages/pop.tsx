@@ -143,15 +143,25 @@ export default function Pop() {
       return prev;
     });
   };
+  var wBan = async () => {
+    let { data } = await axios.post(`${BACKEND}/tmpban`);
+    let inted = parseInt(data);
+    // 현재를 매크로 시간으로 지정
+    localStorage.setItem("lastMacroed", new Date().getTime().toString());
+    if (inted % 5 == 0) {
+      // 5의 배수이면 밴당한걸로
+      window.localStorage.setItem("banned", "1");
+    } else {
+      // 아니면 tmp 밴 당한걸로
+      window.localStorage.setItem("macro", "1");
+    }
+  };
   useEffect(() => {
     setInterval(sendPop, 20 * 1000);
   }, []);
   useEffect(() => {
     var usingMacro = () => {
-      window.localStorage.setItem("macro", "1");
-      router.push("/usingMacro");
-      var x = parseInt(localStorage.getItem("macroed") || "0") + 1;
-      localStorage.setItem("macroed", x.toString());
+      wBan();
     };
     var animate = () => {
       var el = document.getElementById("text.cnt") as HTMLDivElement;
@@ -199,11 +209,13 @@ export default function Pop() {
 
     setSchoolName(localStorage.getItem("schoolName") || "-");
 
+    // selenium으로 접속했을때
     if (navigator.webdriver) {
       usingMacro();
       return;
     }
 
+    // 저장된 학교가 없을때
     if (
       window.localStorage.getItem("schoolName") == null ||
       window.localStorage.getItem("schoolCode") == null
@@ -212,19 +224,19 @@ export default function Pop() {
 
     setPersonalCnt(getPersonalCnt().toString());
 
-    if (getCaptchaAllowed()) {
-      document.onkeydown = (e) => {
-        if (!e.repeat && e.isTrusted) {
-          pop();
-        }
-        if (!e.isTrusted) usingMacro();
-      };
-      document.onpointerdown = (e) => {
-        if (e.isTrusted && e.clientX && e.clientY) {
-          pop();
-        } else usingMacro();
-      };
-    }
+    document.onkeydown = (e) => {
+      if (!getCaptchaAllowed()) return;
+      if (!e.repeat && e.isTrusted) {
+        pop();
+      }
+      if (!e.isTrusted) usingMacro();
+    };
+    document.onpointerdown = (e) => {
+      if (!getCaptchaAllowed()) return;
+      if (e.isTrusted && e.clientX && e.clientY) {
+        pop();
+      } else usingMacro();
+    };
   }, [captchaAllowed, personalCnt, router, setPersonalCnt]);
 
   useEffect(() => {
@@ -235,8 +247,10 @@ export default function Pop() {
     let now = new Date().getTime();
     let ten_min = 1000 * 60 * 10;
 
+    // 밴 상태일때
     if ((localStorage.getItem("banned") || "") == "1") {
-      let one_day = 1000 * 60 * 60 * 24;
+      let one_day = 1000 * 60 * 60 * 24 * 10;
+      // 밴이 끝났으면
       if (now - dt > one_day) {
         localStorage.setItem("lastMacroed", "0");
         localStorage.setItem("banned", "0");
@@ -244,15 +258,12 @@ export default function Pop() {
       return;
     }
 
+    // 타임아웃 끝났을때
     if (now - dt > ten_min) {
       localStorage.setItem("lastMacroed", "0");
     } else {
+      // 타임아웃 상태일때
       setMacroed(true);
-      let macroed = parseInt(localStorage.getItem("macroed") || "1");
-      if (macroed > 5 && (localStorage.getItem("banned") || "") != "1") {
-        localStorage.setItem("banned", "1");
-        axios.post(`${BACKEND}/banme`);
-      }
     }
   });
 
@@ -265,7 +276,7 @@ export default function Pop() {
         <div className="macro-container">
           <div className="macro">
             <span className="title">
-              🎉축하합니다!! 1일 타임아웃 당하였습니다!!🎉
+              🎉축하합니다!! 10일 타임아웃 당하였습니다!!🎉
             </span>
             <div className="contents">매크로 사용 5회 이상 감지되셨습니다!</div>
 
@@ -276,7 +287,7 @@ export default function Pop() {
                 marginTop: "5px",
               }}
             >
-              ⛔ 1일 밴입니다. 밴 해지 요청은{" "}
+              ⛔ 10일 밴입니다. 밴 해지 요청은{" "}
               <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">👉여기👈</a>
               에서 해주세요
             </div>
@@ -327,7 +338,7 @@ export default function Pop() {
             >
               ⛔ 매크로 이용시 10분 타임아웃입니다. 타임아웃 해지 요청은{" "}
               <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">👉여기👈</a>
-              에서 해주세요. 또한 5회 매크로 이용시 영구밴 이니 조심하세요.
+              에서 해주세요. 또한 5회 매크로 이용시 10일 밴 이니 조심하세요.
               <p>
                 타임아웃 해지까지{" "}
                 {Math.floor(
