@@ -14,11 +14,11 @@ export default function UsingMacro() {
   }
 
   axios
-    .get(`${POP_SERVER}/banme`)
+    .post(`${POP_SERVER}/bansure`)
     .then((v) => {
-      console.log("친구야 정말정말 진심으로 축하해!"); // ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+      console.log("친구야 정말정말 진심으로 축하해!");
     })
-    .catch((err) => errorHandle);
+    .catch(errorHandle);
 
   return (
     <>
@@ -28,7 +28,7 @@ export default function UsingMacro() {
             🎉축하합니다!! 1일 타임아웃 당하였습니다!!🎉
           </span>
           <div className="contents">
-            재미로 콘솔을 열어봤든 매크로를 사용하려고 열어봤든 일단 1일
+            재미로 콘솔을 열어봤든 매크로를 사용하려고 열어봤든 일단 10일
             타임아웃이에요! 축하합니다! -SDnight5
           </div>
 
@@ -39,17 +39,9 @@ export default function UsingMacro() {
               marginTop: "5px",
             }}
           >
-            ⛔ 콘솔 이용시 1일 밴입니다. 밴 해지 요청은{" "}
+            ⛔ 콘솔 이용시 10일 밴입니다. 밴 해지 요청은{" "}
             <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">👉여기👈</a>
             에서 해주세요
-            <div
-              style={{
-                fontSize: "1px",
-                opacity: "0.01",
-              }}
-            >
-              여기는 계좌를 쓸 공간이 없으니 어썸링님은 돈 안줘요
-            </div>
           </div>
         </div>
       </div>
