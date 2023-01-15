@@ -137,6 +137,11 @@ export default function Pop() {
               setGlobalCount(y[0]);
               setSchoolCount(y[2]);
               setSchoolRank(y[1]);
+              setTimeout(sendPop, 20 * 1000);
+            })
+            .catch((e) => {
+              errorHandle(e);
+              setTimeout(sendPop, 30 * 1000);
             });
         return 0;
       });
@@ -157,7 +162,7 @@ export default function Pop() {
     }
   };
   useEffect(() => {
-    setInterval(sendPop, 20 * 1000);
+    sendPop();
   }, []);
   useEffect(() => {
     var usingMacro = () => {
