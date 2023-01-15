@@ -91,3 +91,7 @@ button:focus {
     transform: none;
   }
 }
+
+.Toastify__toast-body > div {
+  color: black;
+}
