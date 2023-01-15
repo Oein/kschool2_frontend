@@ -1,7 +1,8 @@
 import axios from "axios";
 import errorHandle from "../functions/axiosErrorHandle";
 
-var POP_SERVER = "https://api.kschool.click";
+var POP_SERVER =
+  "https://port-0-kschool2-backend-4i0mp24lct3difg.jocoding.cloud";
 
 export default function UsingMacro() {
   if (typeof window !== "undefined") {
