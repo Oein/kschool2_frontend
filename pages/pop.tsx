@@ -143,6 +143,7 @@ export default function Pop() {
               errorHandle(e);
               setTimeout(sendPop, 30 * 1000);
             });
+        else setTimeout(sendPop, 20 * 1000);
         return 0;
       });
       setTimeout(sendPop, 30 * 1000);
