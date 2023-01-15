@@ -146,7 +146,6 @@ export default function Pop() {
         else setTimeout(sendPop, 20 * 1000);
         return 0;
       });
-      setTimeout(sendPop, 30 * 1000);
       return prev;
     });
   };
