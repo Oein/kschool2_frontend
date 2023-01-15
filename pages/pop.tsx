@@ -121,6 +121,7 @@ export default function Pop() {
     return captchaAllowed;
   };
   var sendPop = () => {
+    console.log(`POP Request at ${new Date().toString()}`);
     setCaptchaAllowed((prev) => {
       setPopCount((prevC) => {
         if (prev && prevC > 0)
