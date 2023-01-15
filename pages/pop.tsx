@@ -145,6 +145,7 @@ export default function Pop() {
             });
         return 0;
       });
+      setTimeout(sendPop, 30 * 1000);
       return prev;
     });
   };
