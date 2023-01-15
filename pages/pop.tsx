@@ -19,7 +19,7 @@ import errorHandle from "../functions/axiosErrorHandle";
 import { toast } from "react-toastify";
 
 var PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
-var BACKEND = "https://port-0-kschool2-backend-4i0mp24lct3difg.jocoding.cloud";
+var BACKEND = "/api";
 var MAX_POP_LIMIT = 200;
 
 function getPopImage(i: number) {
