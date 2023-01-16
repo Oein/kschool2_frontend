@@ -59,7 +59,12 @@ export default function FindSchool() {
               }
             }}
           />
-          <button className="search">🔍</button>
+          <button
+            className="search"
+            onClick={() => { getSchool(); }
+          }>
+            🔍
+          </button>
         </div>
         <div className="output">
           {loading ? (
