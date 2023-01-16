@@ -24,6 +24,11 @@ export default function App({ Component, pageProps }: AppProps) {
         if (v.data.country_code !== "KR" && location.pathname != "/notKR")
           location.href == "/notKR";
       });
+
+    if (typeof navigator !== "undefined")
+      if (navigator.userAgent.includes("KAKAO"))
+        if (location.pathname != "/disableKakao")
+          location.href == "/disableKakao";
   }, []);
 
   console.log(
