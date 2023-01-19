@@ -53,7 +53,6 @@ export default function Pop() {
   var [captchaAllowed, setCaptchaAllowed] = useState(false);
   var [popCount, setPopCount] = useState(0);
   var [easterClick, setEasterClick] = useState(0);
-  let [clickPerSecond, setClickPerSecond] = useState(0);
   let [macroed, setMacroed] = useState(false);
 
   var getPersonalCnt = () => {
@@ -191,27 +190,6 @@ export default function Pop() {
       setPersonalCnt(getPersonalCnt().toString());
       animate();
       setPopCount((prev) => prev + 1);
-      setClickPerSecond((prev) => {
-        setTimeout(() => {
-          setClickPerSecond((prev) => {
-            if (prev <= 1) return 0;
-            return prev - 1;
-          });
-        }, 1000);
-        if (prev + 1 > 200) {
-          localStorage.setItem(
-            "macroed",
-            (parseInt(localStorage.getItem("macroed") || "0") + 1).toString()
-          );
-          setMacroed(true);
-          setTimeout(() => {
-            setMacroed(false);
-          }, 60 * 10);
-          localStorage.setItem("lastMacroed", new Date().getTime().toString());
-          return 0;
-        }
-        return prev + 1;
-      });
     };
 
     setSchoolName(localStorage.getItem("schoolName") || "-");
@@ -273,118 +251,6 @@ export default function Pop() {
       setMacroed(true);
     }
   });
-
-  if (
-    typeof localStorage !== "undefined" &&
-    (localStorage.getItem("banned") || "0") == "1"
-  ) {
-    return (
-      <>
-        <div className="macro-container">
-          <div className="macro">
-            <span className="title">
-              🎉축하합니다!! 10일 타임아웃 당하였습니다!!🎉
-            </span>
-            <div className="contents">매크로 사용 5회 이상 감지되셨습니다!</div>
-
-            <div
-              style={{
-                borderTop: "1px solid #ccc",
-                paddingTop: "5px",
-                marginTop: "5px",
-              }}
-            >
-              ⛔ 10일 밴입니다. 밴 해지 요청은{" "}
-              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">👉여기👈</a>
-              에서 해주세요
-            </div>
-          </div>
-        </div>
-
-        <style>{`
-        .macro-container {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%,-50%);
-          border-radius: 16px;
-          border: 1px solid #ccc;
-          padding: 30px;
-        }
-
-        .title {
-          font-size: 20px;
-        }
-
-        .contents {
-          padding-top: 10px;
-          font-size: 17px;
-        }
-      `}</style>
-      </>
-    );
-  }
-
-  if (macroed) {
-    return (
-      <>
-        <div className="macro-container">
-          <div className="macro">
-            <span className="title">⚠️ 매크로 사용 감지</span>
-            <div className="contents">
-              최근 서버에 부담을 주는 가장 큰 원인인 매크로 사용을
-              자제해주셨으면 합니다.
-            </div>
-
-            <div
-              style={{
-                borderTop: "1px solid #ccc",
-                paddingTop: "5px",
-                marginTop: "5px",
-              }}
-            >
-              ⛔ 매크로 이용시 10분 타임아웃입니다. 타임아웃 해지 요청은{" "}
-              <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">👉여기👈</a>
-              에서 해주세요. 또한 5회 매크로 이용시 10일 밴 이니 조심하세요.
-              <p>
-                타임아웃 해지까지{" "}
-                {Math.floor(
-                  (new Date(
-                    Number(localStorage.getItem("lastMacroed") || "0")
-                  ).getTime() +
-                    1000 * 60 * 10 -
-                    new Date().getTime()) /
-                    1000
-                )}
-                초
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <style>{`
-      .macro-container {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-        border-radius: 16px;
-        border: 1px solid #ccc;
-        padding: 30px;
-      }
-
-      .title {
-        font-size: 20px;
-      }
-
-      .contents {
-        padding-top: 10px;
-        font-size: 17px;
-      }
-    `}</style>
-      </>
-    );
-  }
 
   if (getCaptchaAllowed())
     return (
@@ -455,25 +321,6 @@ export default function Pop() {
 
           <div className={style.count} id="text.cnt">
             {personalCnt}
-          </div>
-          <div
-            className={classNames([style.count, style.cps])}
-            style={{
-              color:
-                clickPerSecond < 70
-                  ? "white"
-                  : clickPerSecond < 90
-                  ? "yellow"
-                  : clickPerSecond < 120
-                  ? "orange"
-                  : "red",
-              transform: `scale(${
-                1 + Math.max(clickPerSecond - 150, 0) / 1.1
-              })`,
-              transition: "all .3s",
-            }}
-          >
-            {clickPerSecond} / sec
           </div>
           <div
             className={classNames([style.popImage])}
