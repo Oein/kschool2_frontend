@@ -141,6 +141,15 @@ export default function Pop() {
             })
             .catch((e) => {
               errorHandle(e);
+              if (
+                e.response?.status == 400 &&
+                e.response?.data?.error == "Token does not exist."
+              ) {
+                setCaptchaAllowed(false);
+                toast("Token expired.", {
+                  type: "info",
+                });
+              }
               setTimeout(sendPop, 30 * 1000);
             });
         else setTimeout(sendPop, 20 * 1000);
