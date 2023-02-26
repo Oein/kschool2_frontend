@@ -91,11 +91,11 @@ export default function Pop() {
         .get(`${BACKEND}/register?token=${v}`)
         .then((v) => {
           if (v.data.error) {
-            log(`[ERR / hC] ${JSON.stringify(v.data.error)}`);
+            log(`[에러 / h캡챠] ${JSON.stringify(v.data.error)}`);
             setCaptchaAllowed((prev) => false);
           } else {
             window.token = v.data as string;
-            log(`[nTo] ${v.data as string}`);
+            log(`[새 토큰] ${v.data as string}`);
             axios
               .get(
                 `${BACKEND}/first?schoolCode=${localStorage.getItem(
@@ -104,7 +104,7 @@ export default function Pop() {
               )
               .then((v) => {
                 var x = v.data as string;
-                log(`[sI] ${x}`);
+                log(`[학교정보.Res] ${x}`);
                 var y = x.split("/");
                 setSchoolCount(y[2]);
                 setSchoolRank(y[1]);
@@ -126,7 +126,7 @@ export default function Pop() {
     return captchaAllowed;
   };
   var sendPop = () => {
-    log(`POP Request`);
+    log(`팝.Req`);
     setCaptchaAllowed((prev) => {
       setPopCount((prevC) => {
         if (prev && prevC > 0)
@@ -138,7 +138,7 @@ export default function Pop() {
             )
             .then((v) => {
               var x = v.data as string;
-              log(`[nINFO] ${x}`);
+              log(`[팝.Res] ${x}`);
               var y = x.split("/");
               window.token = y[3];
               setGlobalCount(y[0]);
@@ -154,7 +154,7 @@ export default function Pop() {
               ) {
                 setCaptchaAllowed(false);
                 console.error(e);
-                log(`[ERR] ${JSON.stringify(e)}`);
+                log(`[에러] ${JSON.stringify(e)}`);
                 toast("Token expired.", {
                   type: "info",
                 });
@@ -181,7 +181,7 @@ export default function Pop() {
     }
   };
   useEffect(() => {
-    log("Send POP effect");
+    log("interval 설정");
     sendPop();
   }, []);
   useEffect(() => {
