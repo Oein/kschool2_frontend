@@ -126,9 +126,10 @@ export default function Pop() {
     return captchaAllowed;
   };
   var sendPop = () => {
-    log(`팝.Req`);
     setCaptchaAllowed((prev) => {
+      if (!prev) return prev;
       setPopCount((prevC) => {
+        log(`팝.Req`);
         axios
           .post(
             `${BACKEND}/pop?schoolCode=${localStorage.getItem(
