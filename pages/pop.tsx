@@ -126,6 +126,7 @@ export default function Pop() {
     return captchaAllowed;
   };
   var sendPop = () => {
+    log("Pop interval");
     setCaptchaAllowed((prev) => {
       if (!prev) {
         log("캡챠 인증 안됨");
