@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { useRouter } from "next/router";
-import { createRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import NoSSR from "react-no-ssr";
 import Leaderboard, { Rank } from "../components/Leaderboard";
 import tier from "../functions/getTierString";
@@ -127,7 +127,10 @@ export default function Pop() {
   };
   var sendPop = () => {
     setCaptchaAllowed((prev) => {
-      if (!prev) return prev;
+      if (!prev) {
+        log("캡챠 인증 안됨");
+        return prev;
+      }
       setPopCount((prevC) => {
         log(`팝.Req`);
         axios
