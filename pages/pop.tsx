@@ -95,7 +95,7 @@ export default function Pop() {
             setCaptchaAllowed((prev) => false);
           } else {
             window.token = v.data as string;
-            log(`[새 토큰] ${v.data as string}`);
+            log(`토큰 발급됨`);
             axios
               .get(
                 `${BACKEND}/first?schoolCode=${localStorage.getItem(
@@ -138,12 +138,14 @@ export default function Pop() {
             )
             .then((v) => {
               var x = v.data as string;
-              log(`[팝.Res] ${x}`);
               var y = x.split("/");
               window.token = y[3];
               setGlobalCount(y[0]);
               setSchoolCount(y[2]);
               setSchoolRank(y[1]);
+              log("[팝.Res.총합]", y[0]);
+              log("[팝.Res.학교]", y[2]);
+              log("[팝.Res.등수]", y[1]);
               setTimeout(sendPop, 20 * 1000);
             })
             .catch((e) => {
