@@ -129,41 +129,39 @@ export default function Pop() {
     log(`팝.Req`);
     setCaptchaAllowed((prev) => {
       setPopCount((prevC) => {
-        if (prev && prevC > 0)
-          axios
-            .post(
-              `${BACKEND}/pop?schoolCode=${localStorage.getItem(
-                "schoolCode"
-              )}&count=${Math.min(prevC, MAX_POP_LIMIT)}&token=${window.token}`
-            )
-            .then((v) => {
-              var x = v.data as string;
-              var y = x.split("/");
-              window.token = y[3];
-              setGlobalCount(y[0]);
-              setSchoolCount(y[2]);
-              setSchoolRank(y[1]);
-              log("[팝.Res.총합]", y[0]);
-              log("[팝.Res.학교]", y[2]);
-              log("[팝.Res.등수]", y[1]);
-              setTimeout(sendPop, 20 * 1000);
-            })
-            .catch((e) => {
-              errorHandle(e);
-              if (
-                e.response?.status == 400 &&
-                e.response?.data?.error == "Token does not exist."
-              ) {
-                setCaptchaAllowed(false);
-                console.error(e);
-                log(`[에러] ${JSON.stringify(e)}`);
-                toast("Token expired.", {
-                  type: "info",
-                });
-              }
-              setTimeout(sendPop, 30 * 1000);
-            });
-        else setTimeout(sendPop, 20 * 1000);
+        axios
+          .post(
+            `${BACKEND}/pop?schoolCode=${localStorage.getItem(
+              "schoolCode"
+            )}&count=${Math.min(prevC, MAX_POP_LIMIT)}&token=${window.token}`
+          )
+          .then((v) => {
+            var x = v.data as string;
+            var y = x.split("/");
+            window.token = y[3];
+            setGlobalCount(y[0]);
+            setSchoolCount(y[2]);
+            setSchoolRank(y[1]);
+            log("[팝.Res.총합]", y[0]);
+            log("[팝.Res.학교]", y[2]);
+            log("[팝.Res.등수]", y[1]);
+            setTimeout(sendPop, 20 * 1000);
+          })
+          .catch((e) => {
+            errorHandle(e);
+            if (
+              e.response?.status == 400 &&
+              e.response?.data?.error == "Token does not exist."
+            ) {
+              setCaptchaAllowed(false);
+              console.error(e);
+              log(`[에러] ${JSON.stringify(e)}`);
+              toast("Token expired.", {
+                type: "info",
+              });
+            }
+            setTimeout(sendPop, 30 * 1000);
+          });
         return 0;
       });
       return prev;
