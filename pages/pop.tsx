@@ -23,6 +23,8 @@ var PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
 var BACKEND = "https://port-0-kschool2-backend-4i0mp24lct3difg.jocoding.cloud";
 var MAX_POP_LIMIT = 200;
 
+let inter: number;
+
 function getPopImage(i: number) {
   if (i == 0)
     return {
@@ -150,7 +152,6 @@ export default function Pop() {
             log("[팝.Res.총합]", y[0]);
             log("[팝.Res.학교]", y[2]);
             log("[팝.Res.등수]", y[1]);
-            setTimeout(sendPop, 20 * 1000);
           })
           .catch((e) => {
             errorHandle(e);
@@ -165,7 +166,6 @@ export default function Pop() {
                 type: "info",
               });
             }
-            setTimeout(sendPop, 30 * 1000);
           });
         return 0;
       });
@@ -186,9 +186,15 @@ export default function Pop() {
     }
   };
   useEffect(() => {
-    log("interval 설정");
-    sendPop();
-  }, []);
+    if (!inter) {
+      if (typeof inter !== "undefined") {
+        console.log("interval 리셋");
+        clearInterval(inter);
+      }
+      console.log("interval 설정");
+      inter = setInterval(sendPop, 1000 * 30) as any as number;
+    }
+  });
   useEffect(() => {
     var usingMacro = () => {
       wBan();
