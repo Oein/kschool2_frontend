@@ -17,6 +17,7 @@ import DarkMode from "../components/darkMode";
 import getSession from "../functions/getSeason";
 import errorHandle from "../functions/axiosErrorHandle";
 import { toast } from "react-toastify";
+import log from "../utils/log";
 
 var PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
 var BACKEND = "https://port-0-kschool2-backend-4i0mp24lct3difg.jocoding.cloud";
@@ -84,14 +85,17 @@ export default function Pop() {
   };
   var onCaptchaVerify = (v: any) => {
     setTimeout(() => {
+      log("Captcha Verified");
       setCaptchaAllowed((prev) => true);
       axios
         .get(`${BACKEND}/register?token=${v}`)
         .then((v) => {
           if (v.data.error) {
+            log(`[ERR / hC] ${JSON.stringify(v.data.error)}`);
             setCaptchaAllowed((prev) => false);
           } else {
             window.token = v.data as string;
+            log(`[nTo] ${v.data as string}`);
             axios
               .get(
                 `${BACKEND}/first?schoolCode=${localStorage.getItem(
@@ -100,12 +104,14 @@ export default function Pop() {
               )
               .then((v) => {
                 var x = v.data as string;
+                log(`[sI] ${x}`);
                 var y = x.split("/");
                 setSchoolCount(y[2]);
                 setSchoolRank(y[1]);
                 setGlobalCount(y[0]);
               });
             setTimeout(() => {
+              log(`Token expierd by nextjs`);
               setCaptchaAllowed((prev) => false);
             }, 1000 * 60 * 29.5);
           }
@@ -120,7 +126,7 @@ export default function Pop() {
     return captchaAllowed;
   };
   var sendPop = () => {
-    console.log(`POP Request at ${new Date().toString()}`);
+    log(`POP Request`);
     setCaptchaAllowed((prev) => {
       setPopCount((prevC) => {
         if (prev && prevC > 0)
@@ -132,6 +138,7 @@ export default function Pop() {
             )
             .then((v) => {
               var x = v.data as string;
+              log(`[nINFO] ${x}`);
               var y = x.split("/");
               window.token = y[3];
               setGlobalCount(y[0]);
@@ -146,6 +153,8 @@ export default function Pop() {
                 e.response?.data?.error == "Token does not exist."
               ) {
                 setCaptchaAllowed(false);
+                console.error(e);
+                log(`[ERR] ${JSON.stringify(e)}`);
                 toast("Token expired.", {
                   type: "info",
                 });
@@ -172,6 +181,7 @@ export default function Pop() {
     }
   };
   useEffect(() => {
+    log("Send POP effect");
     sendPop();
   }, []);
   useEffect(() => {
