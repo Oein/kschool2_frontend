@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 
 import errorMessages from "../errorMessage.json";
+import log from "../utils/log";
 
 export default function errorHandle(error: any) {
   var emsg = errorMessages as { [key: string]: string };
@@ -15,5 +16,7 @@ export default function errorHandle(error: any) {
       toast(data || error.message, {
         type: "error",
       });
+  } else {
+    log(JSON.stringify((error.message || error).toString()));
   }
 }
