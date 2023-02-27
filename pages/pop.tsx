@@ -23,8 +23,7 @@ var PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
 var BACKEND = "https://port-0-kschool2-backend-4i0mp24lct3difg.jocoding.cloud";
 var MAX_POP_LIMIT = 200;
 
-let requesting = false;
-let last_req = new Date().getTime() - 1000 * 60;
+let inter: number;
 
 function getPopImage(i: number) {
   if (i == 0)
@@ -84,7 +83,7 @@ export default function Pop() {
         setLeaderboard(lb);
         setTotalSchoolCount(parseInt(cnt));
       })
-      .catch((err) => errorHandle);
+      .catch(errorHandle);
   };
   var onCaptchaVerify = (v: any) => {
     setTimeout(() => {
@@ -119,7 +118,7 @@ export default function Pop() {
             }, 1000 * 60 * 29.5);
           }
         })
-        .catch((err) => errorHandle);
+        .catch(errorHandle);
     }, 500);
   };
   var getCount = () => {
@@ -137,13 +136,15 @@ export default function Pop() {
       }
       setPopCount((prevC) => {
         log(`팝.Req`);
-        requesting = true;
-        last_req = new Date().getTime();
         axios
           .post(
             `${BACKEND}/pop?schoolCode=${localStorage.getItem(
               "schoolCode"
-            )}&count=${Math.min(prevC, MAX_POP_LIMIT)}&token=${window.token}`
+            )}&count=${Math.min(prevC, MAX_POP_LIMIT)}&token=${window.token}`,
+            {},
+            {
+              timeout: 1000 * 10,
+            }
           )
           .then((v) => {
             var x = v.data as string;
@@ -169,11 +170,6 @@ export default function Pop() {
                 type: "info",
               });
             }
-          })
-          .finally(() => {
-            requesting = false;
-            last_req = new Date().getTime();
-            setTimeout(sendPop, 1000 * 29.5);
           });
         return 0;
       });
@@ -194,11 +190,9 @@ export default function Pop() {
     }
   };
   useEffect(() => {
-    if (requesting) return;
-    if (new Date().getTime() - last_req < 1000 * 50) return;
-    log("Send Pop 호출");
-    last_req = new Date().getTime();
-    sendPop();
+    if (typeof window == "undefined") return;
+    if (inter) return;
+    inter = setInterval(sendPop, 1000 * 30) as any as number;
   });
   useEffect(() => {
     var usingMacro = () => {
