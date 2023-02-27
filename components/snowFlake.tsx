@@ -44,7 +44,11 @@ export default function SnowFlakes() {
   };
 
   var makeSnowFlakes = () => {
-    for (var i = 0; i < MAX_SNOW_FLAKES; i++) {
+    for (
+      var i = 0;
+      i < Math.min(MAX_SNOW_FLAKES, window.innerWidth / 7.5);
+      i++
+    ) {
       setTimeout(makeSnowFlake, Math.random() * 15000);
     }
   };
