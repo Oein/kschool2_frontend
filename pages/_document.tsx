@@ -89,9 +89,15 @@ export default function Document() {
         />
         <meta name="application-name" content="K학교전" />
         <meta name="msapplication-TileColor" content="#FFFFFF" />
-        <meta name="msapplication-TileImage" content="/pwa/mstile-144x144.png" />
-        <meta name="msapplication-square70x70logo" content="/pwa/mstile-70x70.png" />
-        <meta name="theme-color" content="#317EFB"/>
+        <meta
+          name="msapplication-TileImage"
+          content="/pwa/mstile-144x144.png"
+        />
+        <meta
+          name="msapplication-square70x70logo"
+          content="/pwa/mstile-70x70.png"
+        />
+        <meta name="theme-color" content="#307EFA" />
         <meta
           name="msapplication-square150x150logo"
           content="/pwa/mstile-150x150.png"
