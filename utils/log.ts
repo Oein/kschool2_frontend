@@ -14,5 +14,8 @@ export default function log(...messages: any[]) {
   if (!(window as any).devmode) return;
   let msg = messages.map((i) => i as string).join(" ");
   console.log(`[${new Date().toString()}] [LOG] ${msg}`);
-  if ((window as any).devmode === 2) toast.info(msg);
+  if ((window as any).devmode === 2)
+    (msg.toLocaleLowerCase().includes("err") ? toast.error : toast.info)(msg, {
+      autoClose: 5000,
+    });
 }
