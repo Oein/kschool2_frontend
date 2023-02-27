@@ -23,7 +23,8 @@ var PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
 var BACKEND = "https://port-0-kschool2-backend-4i0mp24lct3difg.jocoding.cloud";
 var MAX_POP_LIMIT = 200;
 
-let inter: number;
+let requesting = false;
+let last_req = new Date().getTime() - 1000 * 60;
 
 function getPopImage(i: number) {
   if (i == 0)
@@ -136,6 +137,8 @@ export default function Pop() {
       }
       setPopCount((prevC) => {
         log(`팝.Req`);
+        requesting = true;
+        last_req = new Date().getTime();
         axios
           .post(
             `${BACKEND}/pop?schoolCode=${localStorage.getItem(
@@ -166,6 +169,11 @@ export default function Pop() {
                 type: "info",
               });
             }
+          })
+          .finally(() => {
+            requesting = false;
+            last_req = new Date().getTime();
+            setTimeout(sendPop, 1000 * 29.5);
           });
         return 0;
       });
@@ -186,14 +194,11 @@ export default function Pop() {
     }
   };
   useEffect(() => {
-    if (!inter) {
-      if (typeof inter !== "undefined") {
-        console.log("interval 리셋");
-        clearInterval(inter);
-      }
-      console.log("interval 설정");
-      inter = setInterval(sendPop, 1000 * 30) as any as number;
-    }
+    if (requesting) return;
+    if (new Date().getTime() - last_req < 1000 * 50) return;
+    log("Send Pop 호출");
+    last_req = new Date().getTime();
+    sendPop();
   });
   useEffect(() => {
     var usingMacro = () => {
