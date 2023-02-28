@@ -191,7 +191,7 @@ export default function Pop() {
   useEffect(() => {
     if (typeof window == "undefined") return;
     if (inter) return;
-    inter = setInterval(sendPop, 1000 * 30) as any as number;
+    inter = setInterval(sendPop, 1000 * 40) as any as number;
   });
   useEffect(() => {
     var usingMacro = () => {
