@@ -136,15 +136,14 @@ export default function Pop() {
       }
       setPopCount((prevC) => {
         log(`팝.Req`);
-        axios
+        const instance = axios.create({
+          timeout: 1000 * 10,
+        });
+        instance
           .post(
             `${BACKEND}/pop?schoolCode=${localStorage.getItem(
               "schoolCode"
-            )}&count=${Math.min(prevC, MAX_POP_LIMIT)}&token=${window.token}`,
-            {},
-            {
-              timeout: 1000 * 10,
-            }
+            )}&count=${Math.min(prevC, MAX_POP_LIMIT)}&token=${window.token}`
           )
           .then((v) => {
             var x = v.data as string;
