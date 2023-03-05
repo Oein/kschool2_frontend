@@ -136,10 +136,7 @@ export default function Pop() {
       }
       setPopCount((prevC) => {
         log(`팝.Req`);
-        const instance = axios.create({
-          timeout: 1000 * 10,
-        });
-        instance
+        axios
           .post(
             `${BACKEND}/pop?schoolCode=${localStorage.getItem(
               "schoolCode"
