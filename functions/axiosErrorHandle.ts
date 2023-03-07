@@ -6,7 +6,7 @@ import log from "../utils/log";
 export default function errorHandle(error: any) {
   var emsg = errorMessages as { [key: string]: string };
 
-  if (error.response?.status == 400) {
+  if (error.response?.status == 406) {
     var data = error.response.data as string;
     if (emsg[data])
       toast(emsg[data], {
@@ -17,6 +17,10 @@ export default function errorHandle(error: any) {
         type: "error",
       });
   } else {
-    log(JSON.stringify((error.message || error).toString()));
+    log(
+      JSON.stringify(
+        (error.response?.data || error.message || error).toString()
+      )
+    );
   }
 }

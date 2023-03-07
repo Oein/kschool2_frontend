@@ -18,9 +18,13 @@ import getSession from "../functions/getSeason";
 import errorHandle from "../functions/axiosErrorHandle";
 import { toast } from "react-toastify";
 import log from "../utils/log";
+import newKey, { aesGcmEncrypt } from "../utils/newKey";
 
 var PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
-var BACKEND = "https://port-0-kschool2-backend-4i0mp24lct3difg.jocoding.cloud";
+var BACKEND =
+  process.env.NODE_ENV == "development"
+    ? "http://localhost:8080"
+    : "http://localhost:8080";
 var MAX_POP_LIMIT = 200;
 
 let inter: number;
@@ -90,7 +94,9 @@ export default function Pop() {
       log("Captcha Verified");
       setCaptchaAllowed((prev) => true);
       axios
-        .get(`${BACKEND}/register?token=${v}`)
+        .get(`${BACKEND}/register?token=${v}`, {
+          withCredentials: false,
+        })
         .then((v) => {
           if (v.data.error) {
             log(`[에러 / h캡챠] ${JSON.stringify(v.data.error)}`);
@@ -136,37 +142,64 @@ export default function Pop() {
       }
       setPopCount((prevC) => {
         log(`팝.Req`);
-        axios
-          .post(
-            `${BACKEND}/pop?schoolCode=${localStorage.getItem(
-              "schoolCode"
-            )}&count=${Math.min(prevC, MAX_POP_LIMIT)}&token=${window.token}`
-          )
-          .then((v) => {
-            var x = v.data as string;
-            var y = x.split("/");
-            window.token = y[3];
-            setGlobalCount(y[0]);
-            setSchoolCount(y[2]);
-            setSchoolRank(y[1]);
-            log("[팝.Res.총합]", y[0]);
-            log("[팝.Res.학교]", y[2]);
-            log("[팝.Res.등수]", y[1]);
-          })
-          .catch((e) => {
-            errorHandle(e);
-            if (
-              e.response?.status == 400 &&
-              e.response?.data?.error == "Token does not exist."
-            ) {
-              setCaptchaAllowed(false);
-              console.error(e);
-              log(`[에러] ${JSON.stringify(e)}`);
-              toast("Token expired.", {
-                type: "info",
-              });
-            }
-          });
+        (async () => {
+          let nto = await newKey(window.token);
+          let mts = Math.random().toString();
+          let now = new Date().getTime().toString();
+          axios
+            .post(`${BACKEND}/pop`, undefined, {
+              params: {
+                schoolCode: btoa(
+                  await aesGcmEncrypt(
+                    localStorage.getItem("schoolCode") || "7451342",
+                    now
+                  )
+                ),
+                count: btoa(
+                  await aesGcmEncrypt(
+                    Math.min(prevC, MAX_POP_LIMIT).toString(),
+                    now
+                  )
+                ),
+                token: btoa(window.token),
+                newToken: btoa(nto),
+                validator: btoa(
+                  await aesGcmEncrypt(btoa(window.navigator.userAgent), mts)
+                ),
+                validatox: btoa(mts),
+                timestamp: now,
+              },
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+            .then((v) => {
+              var x = v.data as string;
+              var y = x.split("/");
+              window.token = nto;
+              setGlobalCount(y[0]);
+              setSchoolCount(y[2]);
+              setSchoolRank(y[1]);
+              log("[팝.Res.총합]", y[0]);
+              log("[팝.Res.학교]", y[2]);
+              log("[팝.Res.등수]", y[1]);
+            })
+            .catch((e) => {
+              errorHandle(e);
+              if (
+                e.response?.status == 400 &&
+                e.response?.data?.error == "Token does not exist."
+              ) {
+                setCaptchaAllowed(false);
+                console.error(e);
+                log(`[에러] ${JSON.stringify(e)}`);
+                toast("Token expired.", {
+                  type: "info",
+                });
+              }
+            });
+        })();
+
         return 0;
       });
       return prev;
