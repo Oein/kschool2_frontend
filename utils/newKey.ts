@@ -1,3 +1,5 @@
+const enc = "6EJ60GLSipZE9m3FXKgAihr4WQrDmtwVz912312eas";
+
 /**
  * Encrypts plaintext using AES-GCM with supplied password, for decryption with aesGcmDecrypt().
  *                                                                      (c) Chris Veness MIT Licence
@@ -85,10 +87,7 @@ function isJsonString(str: string) {
 
 export default async function newKey(old: string) {
   try {
-    let decreypted = await aesGcmDecrypt(
-      old,
-      "6EJ60GLSipZE9m3FXKgAihr4WQrDmtwV"
-    );
+    let decreypted = await aesGcmDecrypt(old, enc);
     if (!decreypted.startsWith("KSCHOOL")) return "ERRORTOKEN";
     decreypted = decreypted.replace("KSCHOOL", "");
     if (!isJsonString(decreypted)) return "ERRORTOKEN";
@@ -107,7 +106,7 @@ export default async function newKey(old: string) {
           k: decryptedJSON.k,
           t: new Date().getTime() + new Date().getTimezoneOffset() * 60000,
         }),
-      "6EJ60GLSipZE9m3FXKgAihr4WQrDmtwV"
+      enc
     );
   } catch (e) {
     return "ERRORTOKEN";
