@@ -24,7 +24,7 @@ var PERSONALCOUNT_LOCALSTORAGE_KEY = "myPop";
 var BACKEND =
   process.env.NODE_ENV == "development"
     ? "http://localhost:8080"
-    : "http://localhost:8080";
+    : "https://port-0-kschool2-backend-4i0mp24lct3difg.jocoding.cloud";
 var MAX_POP_LIMIT = 200;
 
 let inter: number;
