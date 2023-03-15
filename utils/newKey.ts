@@ -1,4 +1,4 @@
-const enc = "6EJ60GLSipZE9m3FXKgAihr4WQrDmtwVz912312eas";
+const enc = "6EJ60GLSipZE9m3FXKgAihr4cxzu9j12WQrDmtwVz912312eas";
 
 /**
  * Encrypts plaintext using AES-GCM with supplied password, for decryption with aesGcmDecrypt().
