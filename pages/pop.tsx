@@ -313,7 +313,9 @@ export default function Pop() {
   if (getCaptchaAllowed())
     return (
       <NoSSR>
-        <SnowFlakes />
+        {new Date().getMonth() == 12 || new Date().getMonth() < 2 ? (
+          <SnowFlakes />
+        ) : null}
         {leaderboardOpened ? (
           <Leaderboard
             onClose={() => {
@@ -343,6 +345,8 @@ export default function Pop() {
           </div>
           <div className={classNames([style.searchSchoolBtn, style.btnSize])}>
             <Link href="/findSchool">🔍</Link>
+            <span>&nbsp;</span>
+            <DarkMode />
           </div>
           <div className={style.title}>
             <h1
@@ -353,7 +357,6 @@ export default function Pop() {
               {easterClick > 1000 ? "LOOHCS-K" : "K-SCHOOL"}
             </h1>
             <img className={style.jo} src="/jo.png" draggable="false" alt="" />
-            <DarkMode />
           </div>
 
           <div className={style.school}>

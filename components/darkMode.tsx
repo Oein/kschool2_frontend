@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 
 import style from "../styles/darkmode.module.css";
 
-import { FaMoon, FaSun } from "react-icons/fa";
-
 export default function DarkMode() {
   var [darkmode, setDarkMode] = useState(false);
 
@@ -19,8 +17,7 @@ export default function DarkMode() {
   }, []);
 
   return (
-    <div
-      className={style.darkmode}
+    <span
       onClick={() => {
         setDarkMode((prev) => {
           if (prev) {
@@ -33,23 +30,13 @@ export default function DarkMode() {
           return !prev;
         });
       }}
+      style={{
+        background: "rgba(0,0,0,0.5)",
+        padding: "7px",
+        borderRadius: "8px",
+      }}
     >
-      <div
-        className={style.icon}
-        style={{
-          transform: `translateY(${darkmode ? "-22px" : "0px"})`,
-        }}
-      >
-        <FaSun size="22px" />
-      </div>
-      <div
-        className={style.icon}
-        style={{
-          transform: `translateY(${darkmode ? "-25px" : "0px"})`,
-        }}
-      >
-        <FaMoon size="22px" />
-      </div>
-    </div>
+      {darkmode ? "🌙" : "☀️"}
+    </span>
   );
 }
