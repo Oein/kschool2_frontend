@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-
-import style from "../styles/darkmode.module.css";
-
 export default function DarkMode() {
   var [darkmode, setDarkMode] = useState(false);
 
