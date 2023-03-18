@@ -105,7 +105,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </a>
           <br />
           <br />
-          개발자 일동 : 서버 버그는 열심히 고치고 있습니다!
+          개발자 일동 : 서버 버그 고쳤습니다!
         </Alert>
       ) : null}
 
