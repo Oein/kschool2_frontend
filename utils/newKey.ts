@@ -1,4 +1,4 @@
-const enc = "6EJ60GLSipZE9m3FXKgAihr4cxzu9j12WQrDmtwVz912312eas";
+const enc = "[사람들이 절대 모를 키]";
 
 /**
  * Encrypts plaintext using AES-GCM with supplied password, for decryption with aesGcmDecrypt().

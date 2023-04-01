@@ -1,8 +1,7 @@
 import axios from "axios";
 import errorHandle from "../functions/axiosErrorHandle";
 
-var POP_SERVER =
-  "https://port-0-kschool2-backend-4i0mp24lct3difg.jocoding.cloud";
+var POP_SERVER = "[백엔드 주소]";
 
 export default function UsingMacro() {
   if (typeof window !== "undefined") {
